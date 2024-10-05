@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # data files
-assets/data
+src/assets/data
