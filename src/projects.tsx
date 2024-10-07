@@ -90,6 +90,9 @@ function ProjectInfoCard({
             </ScrollArea>
             <Link 
                 href={projectLink}
+                className="\
+                w-16 \
+                "
             >
                 Github
             </Link>
