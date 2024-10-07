@@ -3,6 +3,7 @@ import NavBar from './NavBar'
 import About from './About'
 import Skills from './Skills'
 import Projects from './projects'
+import Education from './Education'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <About />
       <Skills />
       <Projects />
+      <Education />
     </Flex>
   )
 }
