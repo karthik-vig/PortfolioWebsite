@@ -3,6 +3,7 @@ import {
     Heading,
     Link,
     Flex,
+    // Card,
  } from '@radix-ui/themes'
 import Data from './assets/data/data.ts'
 
@@ -28,7 +29,7 @@ function NavBarTab({children, link}: {children: string, link: string}) {
                 className="\
                 border-transparent \
                 rounded-md \
-                hover:bg-white/30 \
+                hover:bg-black/30 \
                 pl-3 \
                 pr-3 \
                 pt-2 \
@@ -53,7 +54,19 @@ export default function NavBar() {
             group \
             fixed top-0 left-0 \
             "
-        >
+        >   
+            {/* <Card
+                className="\
+                w-[100%]
+                relative \
+                xs:group-[:not(:hover)]:-top-[300px] \
+                sm:group-[:not(:hover)]:-top-[300px] \
+                md:group-[:not(:hover)]:-top-[80px] \
+                group-hover:animate-slideOut \
+                group-[:not(:hover)]:animate-slideIn \
+                bg-transparent \
+                "
+            > */}
             <Flex
                 direction={{
                     xs: "column",
@@ -91,7 +104,8 @@ export default function NavBar() {
                         })
                     }
             
-            </Flex> 
+            </Flex>
+            {/* </Card>  */}
         </Box>
     );
 }
