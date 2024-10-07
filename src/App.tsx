@@ -2,6 +2,7 @@ import {Flex} from '@radix-ui/themes'
 import NavBar from './NavBar'
 import About from './About'
 import Skills from './Skills'
+import Projects from './projects'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <NavBar />
       <About />
       <Skills />
+      <Projects />
     </Flex>
   )
 }
