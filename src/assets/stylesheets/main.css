@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --skills-box-height: 0px;
+    --height-animation-rate: 300ms
+}
+
+
 /*
 * { 
     outline: 1px solid red !Important;

@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
       panelBackground="translucent"
       style={{
         width: "100%",
-        minHeight: "100%",
+        minHeight: "100vh",
       }}
     >
       <App />
