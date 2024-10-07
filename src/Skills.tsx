@@ -37,7 +37,8 @@ function SkillSection({children, title}: {children: string[], title: string}) {
                 cssRootElement.style != null &&
                 "setProperty" in cssRootElement.style &&
                 typeof cssRootElement.style.setProperty == "function") {
-                cssRootElement.style.setProperty("--height-animation-rate", String((listHeight / 20) * 100) + "ms")
+                const animationTime = "400"; // String((300 / listHeight) * 50)
+                cssRootElement.style.setProperty("--height-animation-rate", animationTime + "ms")
                 cssRootElement.style.setProperty("--skills-box-height", String(listHeight)+"px");
                 // console.log(String((listHeight / 50) * 100) + "ms")
             }
