@@ -7,6 +7,7 @@ import {
     Link,
     ScrollArea,
     Badge,
+    Box,
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
 
@@ -28,8 +29,9 @@ function ProjectInfoCard({
         <Card
             className="\
             w-80 \
-            h-auto \
-            p-4 \
+            max-h-auto \
+            hover:scale-105 \
+            p-0 \
             my-5 \
             "
         >
@@ -42,60 +44,72 @@ function ProjectInfoCard({
                 alt={imageName}
                 className="\
                 border-0 \
-                rounded-md \
-                w-80 \
+                rounded-t-md \
+                w-auto \
                 h-auto \
                 "
             />
-            <Heading>
-                {projectName}
-            </Heading>
-            <ScrollArea
+            <Box
                 className="\
-                max-h-20 \
+                px-4 \
+                pb-4 \
                 "
             >
-                {/* <Flex
-                    direction="row"
-                    wrap="wrap"
-                    gap="1"
+                <Flex
+                    direction="column"
+                    gap="2"
+                >
+                    <Heading>
+                        {projectName}
+                    </Heading>
+                    <ScrollArea
+                        className="\
+                        max-h-20 \
+                        "
+                    >
+                        {/* <Flex
+                            direction="row"
+                            wrap="wrap"
+                            gap="1"
 
-                > */}
-                    {
-                        technologyStack.map((element: string, idx: number) => {
-                            return (
-                                <Badge
-                                    key={idx}
-                                    color="green"
-                                    className="\
-                                    mx-1 \
-                                    my-1 \
-                                    "
-                                >
-                                    {element}
-                                </Badge>
-                            );
-                        })
-                    }
-                {/* </Flex> */}
-            </ScrollArea>
-            <ScrollArea
-                className="\
-                max-h-40 \
-                "
-            >
-                <Text>
-                    {children}
-                </Text>
-            </ScrollArea>
-            <Link 
-                href={projectLink}
-                className="\
-                w-16 \
-                "
-            >
-                Github
-            </Link>
+                        > */}
+                            {
+                                technologyStack.map((element: string, idx: number) => {
+                                    return (
+                                        <Badge
+                                            key={idx}
+                                            color="green"
+                                            className="\
+                                            mx-1 \
+                                            my-1 \
+                                            "
+                                        >
+                                            {element}
+                                        </Badge>
+                                    );
+                                })
+                            }
+                        {/* </Flex> */}
+                    </ScrollArea>
+                    <ScrollArea
+                        className="\
+                        max-h-40 \
+                        "
+                    >
+                        <Text>
+                            {children}
+                        </Text>
+                    </ScrollArea>
+                    <Link 
+                        href={projectLink}
+                        className="\
+                        w-16 \
+                        "
+                    >
+                        Github
+                    </Link>
+                </Flex>
+            </Box>
             </Flex>
         </Card>
     );
