@@ -105,6 +105,7 @@ function ProjectInfoCard({
                     </ScrollArea>
                     <Link 
                         href={projectLink}
+                        target="_blank"
                         className="\
                         w-16 \
                         "
