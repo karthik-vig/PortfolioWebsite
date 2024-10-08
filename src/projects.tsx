@@ -24,13 +24,16 @@ function ProjectInfoCard({
     imageName: string,
     children: string,
     }) {
-
+    // animate the scale part
     return (
         <Card
             className="\
             w-80 \
             max-h-auto \
             hover:scale-105 \
+            [:not(:hover)]:scale-100 \
+            hover:animate-incscale \
+            [&:not(:hover)]:animate-decscale \
             p-0 \
             my-5 \
             "

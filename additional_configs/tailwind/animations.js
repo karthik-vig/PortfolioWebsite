@@ -56,6 +56,22 @@ const Animations = {
                 height: "0px",
             }
         },
+        incscale: {
+            from: {
+                transform: "scale(1)"
+            },
+            to: {
+                transform: "scale(1.05)"
+            }
+        },
+        decscale: {
+            from: {
+                transform: "scale(1.05)"
+            },
+            to: {
+                transform: "scale(1)"
+            }
+        },
     },
     animation: {
         slideOut: "slideOut 400ms ease-in-out",
@@ -64,6 +80,8 @@ const Animations = {
         unrotate90: "unrotate90 200ms ease-in",
         incheight: "incheight var(--height-animation-rate) ease-in-out",
         decheight: "decheight var(--height-animation-rate) ease-in-out",
+        incscale: "incscale 300ms ease-in-out",
+        decscale: "decscale 400ms ease-in-out",
     }
 };
 
