@@ -28,7 +28,9 @@ function Course({children} : {children: educationalQualification}) {
 export default function Education() {
 
     return (
-        <Container>
+        <Container
+            id="education"
+        >
             <Heading
                 as="h3"
                 mb="6"
