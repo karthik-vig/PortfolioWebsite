@@ -6,6 +6,11 @@ import {
     Text,
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
+import {
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react';
 
 interface educationalQualification {
     institute: string;
@@ -30,7 +35,9 @@ function CourseInformation({
             direction="column"
             justify="center"
         >
-            <Text>
+            <Text
+                weight="medium"
+            >
                 {children.duration}
             </Text>
         </Flex>
@@ -41,21 +48,29 @@ function CourseInformation({
         placeOnTop = true;
         placeOnBottom = false;
     }
-    console.log(placeOnTop, placeOnBottom)
+    // console.log(placeOnTop, placeOnBottom)
     return (
         <Flex
             direction="row"
             gap="1"
-            width="45%"
+            width="100%"
+            justify="between"
         >
             { placeOnTop? durationComp: <></> }
             <Flex
                 direction="column"
-                gap="1"
+                gap={{
+                    xs: "5",
+                    sm: "5",
+                    md: "1",
+                }}
                 width="auto"
                 dir="ltr"
             >
-                <Heading as="h4">
+                <Heading 
+                    as="h4"
+                    size="6"
+                >
                     {children.institute}
                 </Heading>
                 <Text>
@@ -77,12 +92,16 @@ function CourseInformation({
 function Course({
     children, 
     direction,
+    drawEmpty,
 } : {
     children: educationalQualification, 
-    direction: directionSet
+    direction: directionSet,
+    drawEmpty: boolean,
 }) {
-    return (
+    const courseBox = useRef<HTMLDivElement>(null);
+    const [drawComponent, setDrawComponent] = useState((
         <Box
+            ref={courseBox}
             width="100%"
         >
             <Flex
@@ -96,6 +115,78 @@ function Course({
                 </CourseInformation>
             </Flex>
         </Box>
+    ));
+    useLayoutEffect(() => {
+        if (drawEmpty && courseBox?.current != null) {
+            const courseBoxHeight = courseBox.current.clientHeight;
+            setDrawComponent((
+                <Box
+                    width="100%"
+                    height={`${courseBoxHeight}px`}
+                >
+                </Box>
+            ));
+        }
+    }, [
+        drawEmpty,
+        courseBox,
+        drawComponent,
+    ]);
+    return drawComponent;
+}
+
+function EducationSide({
+    checkNoDrawCond
+}: {
+    checkNoDrawCond: (cond: number) => boolean 
+}) {
+    return (
+            <Flex
+                direction="column"
+                gap="5"
+                height="auto"
+                width="48%"
+            >
+                {
+                    Data.education.map((element: object, idx: number) => {
+                        let direction: directionSet = "row";
+                        if (idx % 2 !== 0) direction = "row-reverse";
+                        console.log(`idx: ${idx} and direction ${direction}`)
+                        return (
+                            <Course
+                                key={idx}
+                                direction={direction}
+                                drawEmpty={checkNoDrawCond(idx)}
+                            >
+                                {element as educationalQualification}
+                            </Course>
+                        );
+                    })
+                }
+            </Flex>
+    );
+}
+
+function EducationVerticalLine() {
+    return (
+        <Flex
+            direction="row"
+            gap="5"
+            height="auto"
+            width="4%"
+            justify="center"
+        >
+            <div
+                className="\
+                bg-lime-300 \
+                w-2 \
+                h-[100%] \
+                border-0 \
+                rounded-lg \
+                "
+            >
+            </div>
+        </Flex>
     );
 }
 
@@ -114,27 +205,21 @@ export default function Education() {
                 🎓 Education
             </Heading>
             <Flex
-                direction="column"
+                direction="row"
                 gap="5"
                 height="auto"
                 className="\
                 ml-10 \
+                mr-10 \
                 "
             >
-                {
-                    Data.education.map((element: object, idx: number) => {
-                        let direction: directionSet = "row";
-                        if (idx % 2 !== 0) direction = "row-reverse";
-                        return (
-                            <Course
-                                key={idx}
-                                direction={direction}
-                            >
-                                {element as educationalQualification}
-                            </Course>
-                        );
-                    })
-                }
+                <EducationSide 
+                    checkNoDrawCond={(cond: number) => cond % 2 !== 0}
+                />
+                <EducationVerticalLine />
+                <EducationSide
+                    checkNoDrawCond={(cond: number) => cond % 2 === 0}
+                />
             </Flex>
         </Container>
     );
