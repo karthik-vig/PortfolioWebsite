@@ -34,7 +34,7 @@ function CourseInformation({
         <Flex
             direction="column"
             justify="center"
-        >
+        >   
             <Text
                 weight="medium"
             >
@@ -74,13 +74,13 @@ function CourseInformation({
                     {children.institute}
                 </Heading>
                 <Text>
-                    {children.degree + " - " + children.course}
+                    {`📚 ${children.degree} - ${children.course}`}
                 </Text>
                 <Text>
-                    {children.location}
+                    {`🏫 ${children.location}`}
                 </Text>
                 <Text>
-                    {children.degreeMark}
+                    {`🎓 ${children.degreeMark}`}
                 </Text>
             </Flex>
             { placeOnBottom? durationComp: <></> }
