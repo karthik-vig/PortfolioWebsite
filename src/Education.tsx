@@ -143,13 +143,13 @@ function EducationSide({
     contentViewStatus: string,
 }) {
     let cssClassNames = "\
-    data-[state=ture]:opacity-1 \
+    data-[state=true]:opacity-1 \
     data-[state=false]:opacity-0 \
     ";
     if (!checkNoDrawCond(0)) {
         cssClassNames += " data-[state=true]:animate-slideOutLeft"
     } else {
-        cssClassNames = " data-[state=true]:animate-slideOutRight"
+        cssClassNames += " data-[state=true]:animate-slideOutRight"
     }
     return (
             <Flex
@@ -159,6 +159,7 @@ function EducationSide({
                 width="48%"
                 data-state={contentViewStatus}
                 className={cssClassNames}
+                justify="center"
             >
                 {
                     Data.education.map((element: object, idx: number) => {
@@ -226,7 +227,7 @@ export default function Education() {
         if (educationContainerYLocation == undefined) return;
         const windowHeight = window.innerHeight;
         const educationContainerYLocationToWindowHeightRatio = educationContainerYLocation / windowHeight;
-        if ( educationContainerYLocationToWindowHeightRatio <= 0.3 ) {
+        if ( educationContainerYLocationToWindowHeightRatio <= 0.2 ) {
                 setContentViewStatus("true");
             } else if ( educationContainerYLocationToWindowHeightRatio >= 0.95 ){
                 setContentViewStatus("false");
@@ -255,6 +256,7 @@ export default function Education() {
                 ml-10 \
                 mr-10 \
                 "
+                justify="center"
             >
                 <EducationSide 
                     checkNoDrawCond={(cond: number) => cond % 2 !== 0}
