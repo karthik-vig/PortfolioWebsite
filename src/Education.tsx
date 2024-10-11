@@ -142,7 +142,15 @@ function EducationSide({
     checkNoDrawCond: (cond: number) => boolean,
     contentViewStatus: string,
 }) {
-    const cssClassNames = `data-[state=true]:animate-${!checkNoDrawCond(0)? "slideOutLeft": "slideOutRight"} data-[state=ture]:opacity-1 data-[state=false]:opacity-0 `;
+    let cssClassNames = "\
+    data-[state=ture]:opacity-1 \
+    data-[state=false]:opacity-0 \
+    ";
+    if (!checkNoDrawCond(0)) {
+        cssClassNames += " data-[state=true]:animate-slideOutLeft"
+    } else {
+        cssClassNames = " data-[state=true]:animate-slideOutRight"
+    }
     return (
             <Flex
                 direction="column"
