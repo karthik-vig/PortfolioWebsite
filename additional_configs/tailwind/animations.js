@@ -1,6 +1,3 @@
-import { transform } from "typescript";
-
-
 const Animations = {
     keyframes: {
         slideOut: {
@@ -72,6 +69,26 @@ const Animations = {
                 transform: "scale(1)"
             }
         },
+        slideOutLeft: {
+            from: {
+                opacity: "0",
+                transform: "translateX(50px)"
+            }, 
+            to: {
+                opacity: "1",
+                transform: "translateX(0px)"
+            }
+        },
+        slideOutRight: {
+            from: {
+                opacity: "0",
+                transform: "translateX(-50px)"
+            }, 
+            to: {
+                opacity: "1",
+                transform: "translateX(0px)"
+            }
+        },
     },
     animation: {
         slideOut: "slideOut 400ms ease-in-out",
@@ -82,6 +99,8 @@ const Animations = {
         decheight: "decheight var(--height-animation-rate) ease-in-out",
         incscale: "incscale 300ms ease-in-out",
         decscale: "decscale 400ms ease-in-out",
+        slideOutLeft: "slideOutLeft 250ms ease-in-out",
+        slideOutRight: "slideOutRight 250ms ease-in-out",
     }
 };
 
