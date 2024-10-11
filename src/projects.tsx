@@ -1,5 +1,5 @@
 import {
-    Card,
+    // Card,
     Container,
     Flex,
     Heading,
@@ -10,6 +10,7 @@ import {
     Box,
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
+
 
 function ProjectInfoCard({
     projectName, 
@@ -26,16 +27,21 @@ function ProjectInfoCard({
     }) {
     // animate the scale part
     return (
-        <Card
+        <Box
             className="\
-            w-80 \
+            min-w-72 \
+            max-w-72 \
             max-h-auto \
             hover:scale-105 \
-            [:not(:hover)]:scale-100 \
+            [&:not(:hover)]:scale-100 \
             hover:animate-incscale \
             [&:not(:hover)]:animate-decscale \
             p-0 \
             my-5 \
+            border-1 \
+            rounded-lg \
+            backdrop-blur-3xl \
+            bg-black/25 \
             "
         >
             <Flex
@@ -70,29 +76,22 @@ function ProjectInfoCard({
                         max-h-20 \
                         "
                     >
-                        {/* <Flex
-                            direction="row"
-                            wrap="wrap"
-                            gap="1"
-
-                        > */}
-                            {
-                                technologyStack.map((element: string, idx: number) => {
-                                    return (
-                                        <Badge
-                                            key={idx}
-                                            color="green"
-                                            className="\
-                                            mx-1 \
-                                            my-1 \
-                                            "
-                                        >
-                                            {element}
-                                        </Badge>
-                                    );
-                                })
-                            }
-                        {/* </Flex> */}
+                        {
+                            technologyStack.map((element: string, idx: number) => {
+                                return (
+                                    <Badge
+                                        key={idx}
+                                        color="green"
+                                        className="\
+                                        mx-1 \
+                                        my-1 \
+                                        "
+                                    >
+                                        {element}
+                                    </Badge>
+                                );
+                            })
+                        }
                     </ScrollArea>
                     <ScrollArea
                         className="\
@@ -115,7 +114,7 @@ function ProjectInfoCard({
                 </Flex>
             </Box>
             </Flex>
-        </Card>
+        </Box>
     );
 }
 
@@ -123,6 +122,7 @@ export default function Projects() {
     return (
         <Container
             id="projects"
+            width="100%"
         >
             <Heading
                 as="h3"
@@ -132,13 +132,22 @@ export default function Projects() {
             >
                 📦 Projects
             </Heading>
+            <ScrollArea
+                
+            >
             <Flex
                 direction="row"
-                wrap="wrap"
+                wrap={{
+                    xs: "nowrap",
+                    sm: "nowrap",
+                    md: "wrap"
+                }}
                 gap="9"
                 className="\
                 ml-10 \
+                p-5 \
                 "
+                justify="center"
             >
                 {
                     Data.projects.map((element: object, idx: number) => {
@@ -166,6 +175,7 @@ export default function Projects() {
                     })
                 }
             </Flex>
+            </ScrollArea>
         </Container>
     );
 }
