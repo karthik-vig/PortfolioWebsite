@@ -4,6 +4,7 @@ import About from './About'
 import Skills from './Skills'
 import Projects from './projects'
 import Education from './Education'
+import Experience from './Experience'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Skills />
       <Projects />
       <Education />
+      <Experience />
     </Flex>
   )
 }
