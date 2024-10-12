@@ -214,7 +214,9 @@ export default function Education() {
         // go ahead with the animation
         const educationContainerBottomHeight = educationContainer.current?.getBoundingClientRect().bottom;
         if (educationContainerBottomHeight == undefined) return;
-        if ( educationContainerBottomHeight <= 1.05 * window.innerHeight) {
+        if ( educationContainerBottomHeight <= 1.05 * window.innerHeight &&
+            contentViewStatus !== "true"
+        ) {
             setContentViewStatus("true");
             return;
         }
@@ -227,11 +229,15 @@ export default function Education() {
         if (educationContainerYLocation == undefined) return;
         const windowHeight = window.innerHeight;
         const educationContainerYLocationToWindowHeightRatio = educationContainerYLocation / windowHeight;
-        if ( educationContainerYLocationToWindowHeightRatio <= 0.2 ) {
-                setContentViewStatus("true");
-            } else if ( educationContainerYLocationToWindowHeightRatio >= 0.95 ){
-                setContentViewStatus("false");
-            }
+        if ( educationContainerYLocationToWindowHeightRatio <= 0.2 &&
+            contentViewStatus !== "true"
+        ) {
+            setContentViewStatus("true");
+        } else if ( educationContainerYLocationToWindowHeightRatio >= 0.95 &&
+            contentViewStatus !== "false"
+        ){
+            setContentViewStatus("false");
+        }
     })
 
     return (
