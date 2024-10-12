@@ -19,13 +19,12 @@ function ProjectInfoCard({
     imageName,
     children,
     } : {
-    projectName: string,
-    technologyStack: string[],
-    projectLink: string,
-    imageName: string,
-    children: string,
+    projectName: string;
+    technologyStack: string[];
+    projectLink: string;
+    imageName: string;
+    children: string;
     }) {
-    // animate the scale part
     return (
         <Box
             className="\
