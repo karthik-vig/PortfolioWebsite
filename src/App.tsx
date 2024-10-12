@@ -6,6 +6,7 @@ import Projects from './projects'
 import Education from './Education'
 import Experience from './Experience'
 import Certificates from './Certificates'
+import Publications from './Publications'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
       <Education />
       <Experience />
       <Certificates />
+      <Publications />
     </Flex>
   )
 }
