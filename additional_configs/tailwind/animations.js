@@ -89,6 +89,16 @@ const Animations = {
                 transform: "translateX(0px)"
             }
         },
+        popIntoExistence: {
+            from: {
+                opacity: "0",
+                transform: "translateY(-50px)"
+            },
+            to: {
+                opacity: "1",
+                transform: "translateY(0px)"
+            }
+        }
     },
     animation: {
         slideOut: "slideOut 400ms ease-in-out",
@@ -101,6 +111,7 @@ const Animations = {
         decscale: "decscale 400ms ease-in-out",
         slideOutLeft: "slideOutLeft 250ms ease-in-out",
         slideOutRight: "slideOutRight 250ms ease-in-out",
+        popIntoExistence: "popIntoExistence 250ms ease-in-out",
     }
 };
 
