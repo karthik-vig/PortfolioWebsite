@@ -8,7 +8,10 @@ export default {
   ],
   theme: {
     extend: {
-      ...Animations
+      ...Animations,
+      fontFamily: {
+        pacifico: ["Pacifico", "sans-serif"]
+      },
     },
   },
   plugins: [],

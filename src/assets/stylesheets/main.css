@@ -7,6 +7,12 @@
     --height-animation-rate: 300ms;
 }
 
+@font-face {
+    font-family: 'Pacifico';
+    font-style: regular;
+    font-weight: 400;
+    src: url("./src/assets/fonts/Pacifico-Regular.ttf") format("ttf");
+}
 
 /*
 * { 
