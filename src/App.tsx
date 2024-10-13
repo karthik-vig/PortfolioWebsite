@@ -17,7 +17,10 @@ function App() {
       overflowY="auto"
       maxWidth="100vw"
       minHeight="100vh"
-      className="bg-gradient-to-r from-sky-500 to-purple-500"
+      className="\
+      bg-gradient-to-r from-sky-500 to-purple-500 \
+      mb-20 \
+      "
     >
       <NavBar />
       <About />
