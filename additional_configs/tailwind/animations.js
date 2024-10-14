@@ -97,8 +97,8 @@ const Animations = {
         }
     },
     animation: {
-        bgFadeIn: "bgFadeIn 200ms ease-in-out",
-        bgFadeOut: "bgFadeOut 200ms ease-in-out",
+        bgFadeIn: "bgFadeIn 600ms ease-in-out",
+        bgFadeOut: "bgFadeOut 600ms ease-in-out",
         rotate90: "rotate90 200ms ease-in",
         unrotate90: "unrotate90 200ms ease-in",
         incheight: "incheight var(--height-animation-rate) ease-in-out",
