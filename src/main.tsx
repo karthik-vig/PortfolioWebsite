@@ -18,6 +18,9 @@ createRoot(document.getElementById('root')!).render(
         width: "100%",
         minHeight: "100vh",
       }}
+      className="\
+      bg-gradient-to-r from-sky-500 to-purple-500 \
+      "
     >
       <App />
     </Theme>    
