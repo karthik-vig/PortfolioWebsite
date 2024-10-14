@@ -4,6 +4,7 @@ import {
     Box,
     Heading,
     Text,
+    TextProps,
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
 import {
@@ -30,6 +31,11 @@ function CourseInformation({
     children: educationalQualification, 
     direction: directionSet,
 }) {
+    const textSize: TextProps["size"] = {
+        xs: "2",
+        sm: "2",
+        md: "4",
+    };
     const durationComp = (
         <Flex
             direction="column"
@@ -37,6 +43,7 @@ function CourseInformation({
         >   
             <Text
                 weight="medium"
+                size={textSize}
             >
                 {children.duration}
             </Text>
@@ -52,7 +59,11 @@ function CourseInformation({
     return (
         <Flex
             direction="row"
-            gap="1"
+            gap={{
+                xs: "4",
+                sm: "4",
+                md: "1"
+            }}
             width="100%"
             justify="between"
         >
@@ -60,8 +71,8 @@ function CourseInformation({
             <Flex
                 direction="column"
                 gap={{
-                    xs: "5",
-                    sm: "5",
+                    xs: "3",
+                    sm: "3",
                     md: "1",
                 }}
                 width="auto"
@@ -69,17 +80,27 @@ function CourseInformation({
             >
                 <Heading 
                     as="h4"
-                    size="6"
+                    size={{
+                        xs: "4",
+                        sm: "4",
+                        md:"5",
+                    }}
                 >
                     {children.institute}
                 </Heading>
-                <Text>
+                <Text
+                    size={textSize}
+                >
                     {`📚 ${children.degree} - ${children.course}`}
                 </Text>
-                <Text>
+                <Text
+                    size={textSize}
+                >
                     {`🏫 ${children.location}`}
                 </Text>
-                <Text>
+                <Text
+                    size={textSize}
+                >
                     {`🎓 ${children.degreeMark}`}
                 </Text>
             </Flex>

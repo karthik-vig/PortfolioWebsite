@@ -53,8 +53,6 @@ function CertificateInfo({
             data-[animationstate=true]:opacity-1 \
             data-[animationstate=false]:opacity-0 \
             "
-            // bg-black/25 \
-            // backdrop-blur-lg \
         >
             <Flex
                 direction="row"
@@ -69,7 +67,11 @@ function CertificateInfo({
                         className="\
                         mb-3 \
                         "
-                        size="6"
+                        size={{
+                            xs: "4",
+                            sm: "4",
+                            md:"7",
+                        }}
                     >   
                         <Link
                             href={children.link}
@@ -84,6 +86,11 @@ function CertificateInfo({
                         className="\
                         text-slate-100 \
                         "
+                        size={{
+                            xs: "3",
+                            sm: "3",
+                            md:"6",
+                        }}
                     >
                         {children.provider}
                     </Text>

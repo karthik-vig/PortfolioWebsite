@@ -60,7 +60,11 @@ function SkillSection({children, title}: {children: string[], title: string}) {
         >
             <Text
                 weight="bold"
-                size="5"
+                size={{
+                    xs: "4",
+                    sm: "4",
+                    md:"5",
+                }}
             >
                 {title}
             </Text>

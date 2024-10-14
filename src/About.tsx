@@ -134,7 +134,11 @@ export default function About() {
                     mb="10%"
                     mt="10%"
                     align="center"
-                    size="9"
+                    size={{
+                        xs: "7",
+                        sm: "7",
+                        md: "9"
+                    }}
                     className="\
                     font-pacifico \
                     "

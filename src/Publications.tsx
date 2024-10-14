@@ -6,9 +6,6 @@ import {
     Text,
     Link,
 } from '@radix-ui/themes';
-import {
-    ArrowTopRightIcon,
-} from '@radix-ui/react-icons';
 import Data from './assets/data/data';
 
 interface PublicationInfoTemplate {
@@ -33,7 +30,11 @@ function PublicationInfo({
                     className="\
                     mb-3 \
                     "
-                    size="6"
+                    size={{
+                        xs: "3",
+                        sm: "3",
+                        md:"5",
+                    }}
                 >   
                     <Link
                         href={children.link}
@@ -41,21 +42,8 @@ function PublicationInfo({
                         className="\
                         text-slate-100 \
                         "
-                    >   
-                        <Flex
-                            direction="row"
-                            gap="0"
-                        >
-                            {children.title}
-                            <ArrowTopRightIcon 
-                                className="\
-                                mt-2 \
-                                ml-1 \
-                                scale-150 \
-                                text-teal-500
-                                "
-                            />
-                        </Flex>
+                    >  
+                        {children.title}
                     </Link>
                 </Heading>
                 <Text>
