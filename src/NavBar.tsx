@@ -1,11 +1,12 @@
 import { 
-    Box,
     Heading,
     Link,
     Flex,
-    // Card,
  } from '@radix-ui/themes'
 import Data from './assets/data/data.ts'
+import {  
+    useState,
+} from 'react';
 
 function NavBarTab({children, link}: {children: string, link: string}) {
     return (
@@ -43,69 +44,53 @@ function NavBarTab({children, link}: {children: string, link: string}) {
 }
 
 export default function NavBar() {
-    return (
-        <Box
-            style={{
-                padding: "20px"
+    const [ changeNavBarBg ,setChangeNavBarBg ] = useState("false");
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            setChangeNavBarBg("true");
+        } else {
+            setChangeNavBarBg("false");
+        }
+    });
+    return (  
+        <Flex
+            data-change-nav-bar-bg={changeNavBarBg}
+            direction={{
+                xs: "column",
+                sm: "column",
+                md: "row",
+                lg: "row",
+                xl: "row",
             }}
-            width="100%"
-            overflowY="auto"
+            gap="3"
+            justify="center"
+            align="center"
             className="\
-            group \
-            fixed top-0 left-0 \
+            fixed top-0 z-50 \
+            min-h-20 \
+            w-[100%] \
+            data-[change-nav-bar-bg=true]:bg-black/30 \
+            data-[change-nav-bar-bg=true]:backdrop-blur-sm \
+            data-[change-nav-bar-bg=false]:bg-transparent \
+            data-[change-nav-bar-bg=true]:animate-bgFadeIn \
+            data-[change-nav-bar-bg=false]:animate-bgFadeOut \
             "
         >   
-            {/* <Card
-                className="\
-                w-[100%]
-                relative \
-                xs:group-[:not(:hover)]:-top-[300px] \
-                sm:group-[:not(:hover)]:-top-[300px] \
-                md:group-[:not(:hover)]:-top-[80px] \
-                group-hover:animate-slideOut \
-                group-[:not(:hover)]:animate-slideIn \
-                bg-transparent \
-                "
-            > */}
-            <Flex
-                direction={{
-                    xs: "column",
-                    sm: "column",
-                    md: "row",
-                    lg: "row",
-                    xl: "row",
-                }}
-                gap="3"
-                justify="center"
-                className="\
-                relative \
-                xs:group-[:not(:hover)]:-top-[300px] \
-                sm:group-[:not(:hover)]:-top-[300px] \
-                md:group-[:not(:hover)]:-top-[80px] \
-                group-hover:animate-slideOut \
-                group-[:not(:hover)]:animate-slideIn \
-                bg-transparent \
-                "
-            >   
-            
-                    {
-                        Data.navBar.map((element: object, idx: number) => {
-                            if (!("link" in element && "title" in element)){
-                                return (<></>);
-                            } 
-                            return (
-                                <NavBarTab
-                                    key={idx}
-                                    link={element.link as string}
-                                >   
-                                    {element.title as string}
-                                </NavBarTab>
-                            );
-                        })
-                    }
-            
-            </Flex>
-            {/* </Card>  */}
-        </Box>
+            {
+                Data.navBar.map((element: object, idx: number) => {
+                    if (!("link" in element && "title" in element)){
+                        return (<></>);
+                    } 
+                    return (
+                        <NavBarTab
+                            key={idx}
+                            link={element.link as string}
+                        >   
+                            {element.title as string}
+                        </NavBarTab>
+                    );
+                })
+            }
+        </Flex> 
     );
 }

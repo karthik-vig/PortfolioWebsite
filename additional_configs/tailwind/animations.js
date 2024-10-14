@@ -1,23 +1,19 @@
 const Animations = {
     keyframes: {
-        slideOut: {
+        bgFadeIn: {
             from: {
-                // transform: "translateY(-100px)"
-                top: "-80px"
+                backgroundColor: "rgba(0,0,0,0)"
             },
             to: {
-                // transform: "translateY(0px)"
-                top: "0px"
+                backgroundColor: "rgba(0,0,0,0.3)"
             }
         },
-        slideIn: {
+        bgFadeOut: {
             from: {
-                // transform: "translateY(0px)"
-                top: "0px"
+                backgroundColor: "rgba(0,0,0,0.3)"
             },
             to: {
-                // transform: "translateY(-100px)"
-                top: "-80px"
+                backgroundColor: "rgba(0,0,0,0)"
             }
         },
         rotate90: {
@@ -101,8 +97,8 @@ const Animations = {
         }
     },
     animation: {
-        slideOut: "slideOut 400ms ease-in-out",
-        slideIn: "slideIn 500ms ease-in-out",
+        bgFadeIn: "bgFadeIn 200ms ease-in-out",
+        bgFadeOut: "bgFadeOut 200ms ease-in-out",
         rotate90: "rotate90 200ms ease-in",
         unrotate90: "unrotate90 200ms ease-in",
         incheight: "incheight var(--height-animation-rate) ease-in-out",
