@@ -26,27 +26,32 @@ function ToggleNavBar({
         toggle: string;
         position: number;
     }) => {
-        let cssClassName = "\
+        const cssClassName = "\
             w-5 \
             h-[2px] \
             my-[5px] \
             bg-slate-100 \
             border-0 \
             rounded-lg \
+            data-[toggle=true]:data-[position=0]:rotate-45 \
+            data-[toggle=true]:data-[position=0]:translate-y-[6.5px] \
+            data-[toggle=false]:data-[position=0]:rotate-0 \
+            data-[toggle=false]:data-[position=0]:translate-y-0 \
+            data-[toggle=true]:data-[position=1]:opacity-0 \
+            data-[toggle=false]:data-[position=1]:opacity-1 \
+            data-[toggle=true]:data-[position=2]:-rotate-45 \
+            data-[toggle=true]:data-[position=2]:-translate-y-[6.5px] \
+            data-[toggle=false]:data-[position=2]:rotate-0 \
+            data-[toggle=false]:data-[position=2]:translate-y-0 \
+            data-[toggle=true]:data-[position=0]:animate-topLineToCross \
+            data-[toggle=false]:data-[position=0]:animate-topLineToUnCross \
+            data-[toggle=true]:data-[position=2]:animate-bottomLineToCross \
+            data-[toggle=false]:data-[position=2]:animate-bottomLineToUnCross \
             ";
-        switch(position) {
-            case 0:
-                cssClassName += (toggle === "true")? " rotate-45 translate-y-[6.5px]": " rotate-0 translate-y-0";
-                break;
-            case 1:
-                cssClassName += (toggle === "true")? " opacity-0": " opacity-1";
-                break;
-            case 2:
-                cssClassName += (toggle === "true")? " -rotate-45 -translate-y-[6.5px]": " rotate-0 translate-y-0";
-                break;
-        }
         return (
             <div
+                data-toggle={toggle}
+                data-position={String(position)}
                 className={cssClassName}
             >
             </div>
@@ -200,7 +205,6 @@ export default function NavBar() {
         if (window.innerWidth > smallScreenBreakPointSize ||
             !navBar.current) return;
         const navBarheight = navBar.current.clientHeight;
-        console.log(navBarheight)
         const rootElement = document.querySelector(":root");
         if (rootElement !== null &&
             "style" in rootElement &&

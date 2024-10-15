@@ -1,3 +1,5 @@
+import { transform } from "typescript";
+
 const Animations = {
     keyframes: {
         bgFadeIn: {
@@ -111,6 +113,38 @@ const Animations = {
             to: {
                 top: "-var(--nav-bar-height)px"
             }
+        },
+        topLineToCross: {
+            from: {
+                transform: "translateY(0px) rotate(0deg)"
+            },
+            to: {
+                transform: "translateY(6.5px) rotate(45deg)"
+            }
+        },
+        topLineToUnCross: {
+            from: {
+                transform: "translateY(6.5px) rotate(45deg)"
+            },
+            to: {
+                transform: "translateY(0px) rotate(0deg)"
+            }
+        },
+        bottomLineToCross: {
+            from: {
+                transform: "translateY(0px) rotate(0deg)"
+            },
+            to: {
+                transform: "translateY(-6.5px) rotate(-45deg)"
+            }
+        },
+        bottomLineToUnCross: {
+            from: {
+                transform: "translateY(-6.5px) rotate(-45deg)"
+            },
+            to: {
+                transform: "translateY(0px)  rotate(0deg)"
+            }
         }
     },
     animation: {
@@ -126,7 +160,11 @@ const Animations = {
         slideOutRight: "slideOutRight 250ms ease-in-out",
         popIntoExistence: "popIntoExistence 250ms ease-in-out",
         slideOut: "slideOut 400ms ease-in-out",
-        slideIn: "slideIn 400ms ease-in-out"
+        slideIn: "slideIn 400ms ease-in-out",
+        topLineToCross: "topLineToCross 200ms ease-in-out",
+        topLineToUnCross: "topLineToUnCross 200ms ease-in-out",
+        bottomLineToCross: "bottomLineToCross 200ms ease-in-out",
+        bottomLineToUnCross: "bottomLineToUnCross 200ms ease-in-out"
     }
 };
 
