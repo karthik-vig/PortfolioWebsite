@@ -124,6 +124,11 @@ export default function About() {
             "
         >
             <Flex
+                mt={{
+                    xs: "9",
+                    sm: "9",
+                    md: "5",
+                }}
                 direction="column"
                 gap="5"
                 className="\
