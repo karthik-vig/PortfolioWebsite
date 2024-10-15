@@ -25,9 +25,9 @@ function Seperator() {
             md:opacity-1 \
             lg:opacity-1 \
             xl:opacity-1 \
-            xs:min-w-[100%] \
-            sm:min-w-[100%] \
-            md:min-w-1 \
+            xs:min-w-0 \
+            sm:min-w-0 \
+            md:min-w-0 \
             lg:min-w-1 \
             xl:min-w-1 \
             xs:min-h-1 \
