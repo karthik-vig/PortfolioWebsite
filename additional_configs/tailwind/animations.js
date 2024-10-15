@@ -94,6 +94,23 @@ const Animations = {
                 opacity: "1",
                 transform: "translateY(0px)"
             }
+        },
+        slideOut: {
+            from: {
+                // top: "-var(--nav-bar-height)px",
+                top: "-400px"
+            },
+            to: {
+                top: "0px"
+            }
+        },
+        slideIn: {
+            from: {
+                top: "0px"
+            },
+            to: {
+                top: "-var(--nav-bar-height)px"
+            }
         }
     },
     animation: {
@@ -108,6 +125,8 @@ const Animations = {
         slideOutLeft: "slideOutLeft 250ms ease-in-out",
         slideOutRight: "slideOutRight 250ms ease-in-out",
         popIntoExistence: "popIntoExistence 250ms ease-in-out",
+        slideOut: "slideOut 400ms ease-in-out",
+        slideIn: "slideIn 400ms ease-in-out"
     }
 };
 

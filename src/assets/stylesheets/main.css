@@ -5,6 +5,7 @@
 :root {
     --skills-box-height: 0px;
     --height-animation-rate: 300ms;
+    --nav-bar-height: 0px;
 }
 
 @font-face {
