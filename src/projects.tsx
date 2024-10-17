@@ -31,6 +31,7 @@ function ProjectInfoCard({
     }) {
 
     const [rotateBox, setRotateBox] = useState<{x: number; y: number;}>({x: 0, y: 0});
+    const [boxShadow, setBoxShadow] = useState<{x: number; y: number;}>({x: 0, y: 0});
 
     const rotateOnMouseMovement = (event: React.MouseEvent) => {
         // get the dimension and location of the element
@@ -59,7 +60,7 @@ function ProjectInfoCard({
         };
         // set the + / - degree of rotation based on the quadrant 
         // the mouse is currently in
-        const maxRotation = 20;
+        const maxRotation = 10;
         const rotationDirection = {
             x: (mousePosition.y >= boxHalfDim.halfHeight)? -1: 1,
             y: (mousePosition.x >= boxHalfDim.halfWidth)? 1: -1,
@@ -78,13 +79,30 @@ function ProjectInfoCard({
         const rotateX = Math.abs(maxRotation * rotationRatio.y) * rotationDirection.x * allowRotation;
         const rotateY = Math.abs(maxRotation * rotationRatio.x) * rotationDirection.y * allowRotation;
 
-        const rotate3d = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        console.log(rotate3d);
+        // const rotate3d = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        // console.log(rotate3d);
         setRotateBox({x: rotateX, y: rotateY});
+
+        // dynamically set the box shadow based on the same
+        // rotationRatio calculated earlier
+        const maxBoxShadow = {
+            x: 30,
+            y: 30,
+        };
+        const boxShadowDirection = {
+            x: (mousePosition.x >= boxHalfDim.halfWidth)? -1: 1,
+            y: (mousePosition.y >= boxHalfDim.halfHeight )? -1: 1,
+        }
+        const currentBoxShadow = {
+            x: Math.abs(maxBoxShadow.x * rotationRatio.x) * boxShadowDirection.x,
+            y: Math.abs(maxBoxShadow.y * rotationRatio.y) * boxShadowDirection.y,
+        }
+        setBoxShadow(currentBoxShadow);
     };
 
     const resetRotation = () => {
         setRotateBox({x: 0, y: 0});
+        setBoxShadow({x: 0, y: 0});
     }
 
     return (
@@ -104,7 +122,8 @@ function ProjectInfoCard({
             onMouseLeave={resetRotation}
             style={{
                 transform: `perspective(1000px) rotateX(${rotateBox.x}deg) rotateY(${rotateBox.y}deg)`,
-                transition: `transform 400ms ease-out`
+                transition: `transform 200ms ease-out, box-shadow 100ms ease-out`,
+                boxShadow: `${boxShadow.x}px ${boxShadow.y}px 10px rgba(0,0,0,0.3)`,
             }}
         >
             <Flex
