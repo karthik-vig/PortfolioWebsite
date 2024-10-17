@@ -57,6 +57,9 @@ function ExperienceInstance({
             data-[animationstate=false]:opacity-0 \
             data-[animationstate=true]:opacity-1 \
             "
+            style={{
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)"
+            }}
         >
             <Heading
                 className="\
