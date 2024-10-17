@@ -8,7 +8,11 @@ import {
     ScrollArea,
     Badge,
     Box,
+    Button,
 } from '@radix-ui/themes';
+import {
+    useState,
+} from 'react';
 import Data from './assets/data/data';
 
 
@@ -25,16 +29,49 @@ function ProjectInfoCard({
     imageName: string;
     children: string;
     }) {
+
+    const [rotateBox, setRotateBox] = useState<{x: number; y: number;}>({x: 0, y: 0});
+
+    const rotateOnMouseMovement = (event: React.MouseEvent) => {
+        const {
+            left: boxPositionX,
+            top: boxPositionY,
+            height: boxHeight,
+            width: boxWidth
+        } = event.currentTarget.getBoundingClientRect();
+        const boxHalfHeight = boxHeight / 2;
+        const boxHalfWidth = boxWidth / 2;
+        const mouseXPosition = event.clientX - boxPositionX;
+        const mouseYPosition = event.clientY - boxPositionY;
+        const rotationXRatio = (mouseXPosition - boxHalfWidth) / boxHalfWidth;
+        const rotationYRatio = (mouseYPosition - boxHalfHeight) / boxHalfHeight;
+        const maxRotation = 20;
+        const rotationDirection = {
+            x: (mouseYPosition >= boxHalfHeight)? -1: 1,
+            y: (mouseXPosition >= boxHalfWidth)? 1: -1,
+        };
+        const rotateX = Math.abs(maxRotation * rotationYRatio) * rotationDirection.x;
+        const rotateY = Math.abs(maxRotation * rotationXRatio) * rotationDirection.y;
+
+        const rotate3d = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        console.log(rotate3d);
+        setRotateBox({x: rotateX, y: rotateY});
+        // projectInfoCardBox.current.style.transform = rotate3d;
+    };
+
+    const resetRotation = () => {
+        // if (!projectInfoCardBox.current) return;
+        // projectInfoCardBox.current.style.transform = "rotateX(0deg) rotateY(0deg)"; 
+        setRotateBox({x: 0, y: 0});
+    }
+
     return (
         <Box
+            // ref={projectInfoCardBox}
             className="\
             min-w-72 \
             max-w-72 \
             max-h-auto \
-            hover:scale-105 \
-            [&:not(:hover)]:scale-100 \
-            hover:animate-incscale \
-            [&:not(:hover)]:animate-decscale \
             p-0 \
             my-5 \
             border-1 \
@@ -42,6 +79,16 @@ function ProjectInfoCard({
             backdrop-blur-3xl \
             bg-black/25 \
             "
+            // hover:scale-105 \
+            // [&:not(:hover)]:scale-100 \
+            // hover:animate-incscale \
+            // [&:not(:hover)]:animate-decscale \
+            onMouseMoveCapture={rotateOnMouseMovement}
+            onMouseLeave={resetRotation}
+            style={{
+                transform: `perspective(1000px) rotateX(${rotateBox.x}deg) rotateY(${rotateBox.y}deg)`,
+                transition: `transform 400ms ease-out`
+            }}
         >
             <Flex
                 direction="column"
@@ -106,9 +153,12 @@ function ProjectInfoCard({
                         target="_blank"
                         className="\
                         w-16 \
+                        mt-1 \
                         "
                     >
-                        Github
+                        <Button>
+                            Github
+                        </Button>
                     </Link>
                 </Flex>
             </Box>
