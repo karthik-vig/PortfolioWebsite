@@ -104,21 +104,24 @@ function NavBarTab({
                     md: "4",
                     lg: "4",
                 }}
-                weight="regular"
+                weight="bold"
                 style={{
                     marginLeft: "20px", 
                     marginRight: "20px",
-                    color: "whitesmoke",
+                    // color: "whitesmoke",
                 }}
                 className="\
                 border-transparent \
                 rounded-md \
-                hover:bg-black/30 \
                 pl-3 \
                 pr-3 \
                 pt-2 \
                 pb-2 \
+                hover:text-orange-400 \
+                hover:animate- \
+                text-slate-200 \
                 "
+                // hover:bg-black/30 \
                 onClick={() => setShowNavBar("false")}
             >
                 {children}
