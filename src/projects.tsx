@@ -33,41 +33,62 @@ function ProjectInfoCard({
     const [rotateBox, setRotateBox] = useState<{x: number; y: number;}>({x: 0, y: 0});
 
     const rotateOnMouseMovement = (event: React.MouseEvent) => {
+        // get the dimension and location of the element
         const {
             left: boxPositionX,
             top: boxPositionY,
             height: boxHeight,
             width: boxWidth
         } = event.currentTarget.getBoundingClientRect();
-        const boxHalfHeight = boxHeight / 2;
-        const boxHalfWidth = boxWidth / 2;
-        const mouseXPosition = event.clientX - boxPositionX;
-        const mouseYPosition = event.clientY - boxPositionY;
-        const rotationXRatio = (mouseXPosition - boxHalfWidth) / boxHalfWidth;
-        const rotationYRatio = (mouseYPosition - boxHalfHeight) / boxHalfHeight;
+        // essentiallly finding the center of the element
+        const boxHalfDim = {
+            halfHeight: boxHeight / 2,
+            halfWidth: boxWidth / 2,
+        }
+        // calculate the local mouse position
+        const mousePosition = {
+            x: event.clientX - boxPositionX,
+            y: event.clientY - boxPositionY,
+        };
+        // convert the local mouse position to percentage ratio
+        // so that we can assign an angle out of the max allowed
+        // angle
+        const rotationRatio = {
+            x: (mousePosition.x - boxHalfDim.halfWidth) / boxHalfDim.halfWidth,
+            y: (mousePosition.y - boxHalfDim.halfHeight) / boxHalfDim.halfHeight,
+        };
+        // set the + / - degree of rotation based on the quadrant 
+        // the mouse is currently in
         const maxRotation = 20;
         const rotationDirection = {
-            x: (mouseYPosition >= boxHalfHeight)? -1: 1,
-            y: (mouseXPosition >= boxHalfWidth)? 1: -1,
+            x: (mousePosition.y >= boxHalfDim.halfHeight)? -1: 1,
+            y: (mousePosition.x >= boxHalfDim.halfWidth)? 1: -1,
         };
-        const rotateX = Math.abs(maxRotation * rotationYRatio) * rotationDirection.x;
-        const rotateY = Math.abs(maxRotation * rotationXRatio) * rotationDirection.y;
+        // implement a cutoff; so that the user don't
+        // feel sick
+        let allowRotation = 1;
+        const allowRotationCutoff = {
+            x: 0.3,
+            y: 0.4,
+        };
+        if ( Math.abs(rotationRatio.x) <= allowRotationCutoff.x &&
+        Math.abs(rotationRatio.y) <= allowRotationCutoff.y ) {
+            allowRotation = 0;
+        }
+        const rotateX = Math.abs(maxRotation * rotationRatio.y) * rotationDirection.x * allowRotation;
+        const rotateY = Math.abs(maxRotation * rotationRatio.x) * rotationDirection.y * allowRotation;
 
         const rotate3d = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         console.log(rotate3d);
         setRotateBox({x: rotateX, y: rotateY});
-        // projectInfoCardBox.current.style.transform = rotate3d;
     };
 
     const resetRotation = () => {
-        // if (!projectInfoCardBox.current) return;
-        // projectInfoCardBox.current.style.transform = "rotateX(0deg) rotateY(0deg)"; 
         setRotateBox({x: 0, y: 0});
     }
 
     return (
         <Box
-            // ref={projectInfoCardBox}
             className="\
             min-w-72 \
             max-w-72 \
@@ -79,10 +100,6 @@ function ProjectInfoCard({
             backdrop-blur-3xl \
             bg-black/25 \
             "
-            // hover:scale-105 \
-            // [&:not(:hover)]:scale-100 \
-            // hover:animate-incscale \
-            // [&:not(:hover)]:animate-decscale \
             onMouseMoveCapture={rotateOnMouseMovement}
             onMouseLeave={resetRotation}
             style={{
