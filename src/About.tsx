@@ -16,32 +16,19 @@ interface ContactInfoTemplate {
     github: string;
 }
 
-function Seperator() {
+
+function SVGIcons({
+    svgName,
+}:{
+    svgName: string;
+}) {
     return (
-        <div
-            className="\
-            xs:opacity-0 \
-            sm:opacity-1 \
-            md:opacity-1 \
-            lg:opacity-1 \
-            xl:opacity-1 \
-            xs:min-w-0 \
-            sm:min-w-0 \
-            md:min-w-0 \
-            lg:min-w-1 \
-            xl:min-w-1 \
-            xs:min-h-1 \
-            sm:min-h-1 \
-            md:min-h-5 \
-            lg:min-h-5 \
-            xl:min-h-5 \
-            bg-slate-200 \
-            border-1 \
-            rounded-lg \
-            "
-        >
-        </div>
-    );
+        <img 
+            src={`./src/assets/images/${svgName}.svg`}
+            alt={`${svgName} svg icon`}
+            className="inline m-2 h-7 w-7"
+        />
+    )
 }
 
 function ContactInfo({
@@ -71,9 +58,6 @@ function ContactInfo({
             justify="center"
             align="center"
         >
-            <Heading>
-                ✉️
-            </Heading>
             <Link
                 href={`mailto:${children.email}`}
                 target={linkRenderSetting.target}
@@ -81,9 +65,11 @@ function ContactInfo({
                 size={linkRenderSetting.size}
                 color={linkRenderSetting.color}
             >
+                <SVGIcons 
+                    svgName='mail'
+                />
                 {children.email}
             </Link>
-            <Seperator />
             <Link
                 href={children.github}
                 target={linkRenderSetting.target}
@@ -91,9 +77,11 @@ function ContactInfo({
                 size={linkRenderSetting.size}
                 color={linkRenderSetting.color}
             >
+                <SVGIcons 
+                    svgName='github'
+                />
                 Github
             </Link>
-            <Seperator />
             <Link
                 href={children.linkedin}
                 target={linkRenderSetting.target}
@@ -101,6 +89,9 @@ function ContactInfo({
                 size={linkRenderSetting.size}
                 color={linkRenderSetting.color}
             >
+                <SVGIcons 
+                    svgName='linkedin'
+                />
                 Linkedin
             </Link>
         </Flex>
