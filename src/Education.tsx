@@ -202,9 +202,27 @@ function EducationSide({
     );
 }
 
-function EducationVerticalLine() {
+function EducationVerticalLine({
+    contentViewStatus,
+    height,
+}:{
+    contentViewStatus: "true" | "false";
+    height: number | undefined;
+}) {
+    // const timelineDiv = useRef<HTMLDivElement>(null);
+    useLayoutEffect(() => {
+        if (contentViewStatus === "false") return;
+        const rootElement: HTMLHtmlElement | null = document.querySelector(":root");
+        if (rootElement === null) return;
+        rootElement.style.setProperty("--timeline-height", String(height) + "px");
+    }, [
+        contentViewStatus,
+        height,
+    ])
+
     return (
         <Flex
+            // ref={timelineDiv}
             direction="row"
             gap="5"
             height="auto"
@@ -212,12 +230,16 @@ function EducationVerticalLine() {
             justify="center"
         >
             <div
+                // ref={timelineDiv}
+                data-content-view-status={contentViewStatus}
                 className="\
                 bg-lime-300 \
                 w-2 \
-                h-[100%] \
                 border-0 \
                 rounded-lg \
+                data-[content-view-status=true]:animate-inctimelineheight \
+                data-[content-view-status=true]:h-[100%] \
+                data-[content-view-status=false]:h-0 \
                 "
             >
             </div>
@@ -228,6 +250,7 @@ function EducationVerticalLine() {
 export default function Education() {
 
     const educationContainer = useRef<HTMLDivElement>(null);
+    const mainFlexBox = useRef<HTMLDivElement>(null);
     const [contentViewStatus, setContentViewStatus] = useState("false");
     window.addEventListener('scroll', () => { 
         // get the bottom height and if it is less than the height of 
@@ -276,6 +299,7 @@ export default function Education() {
                 🎓 Education
             </Heading>
             <Flex
+                ref={mainFlexBox}
                 direction="row"
                 gap="5"
                 height="auto"
@@ -289,7 +313,10 @@ export default function Education() {
                     checkNoDrawCond={(cond: number) => cond % 2 !== 0}
                     contentViewStatus={contentViewStatus}
                 />
-                <EducationVerticalLine />
+                <EducationVerticalLine 
+                    contentViewStatus={contentViewStatus as ("true" | "false")}
+                    height={mainFlexBox.current?.getBoundingClientRect().height}
+                />
                 <EducationSide
                     checkNoDrawCond={(cond: number) => cond % 2 === 0}
                     contentViewStatus={contentViewStatus}

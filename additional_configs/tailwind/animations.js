@@ -129,6 +129,14 @@ const Animations = {
             to: {
                 transform: "translateY(0px)  rotate(0deg)"
             }
+        },
+        inctimelineheight: {
+            from: {
+                height: "0px"
+            },
+            to: {
+                height: "var(--timeline-height)"
+            }
         }
     },
     animation: {
@@ -146,7 +154,8 @@ const Animations = {
         topLineToCross: "topLineToCross 200ms ease-in-out",
         topLineToUnCross: "topLineToUnCross 200ms ease-in-out",
         bottomLineToCross: "bottomLineToCross 200ms ease-in-out",
-        bottomLineToUnCross: "bottomLineToUnCross 200ms ease-in-out"
+        bottomLineToUnCross: "bottomLineToUnCross 200ms ease-in-out",
+        inctimelineheight: "inctimelineheight 400ms ease-in-out",
     }
 };
 
