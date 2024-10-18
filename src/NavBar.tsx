@@ -256,7 +256,14 @@ export default function NavBar() {
             align="center"
             className={cssClassName}
             ref={navBar}
-        >
+        >        
+            <img
+                height="50px"
+                width="50px"
+                src="./src/assets/images/personal_portfolio_icon.svg"
+                alt="personal portfolio logo"
+                className="max-[520px]:mt-5"
+            />
             {
                 Data.navBar.map((element: object, idx: number) => {
                     if (!("link" in element && "title" in element)){
