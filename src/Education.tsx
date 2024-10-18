@@ -32,6 +32,7 @@ function CourseInformation({
     direction: directionSet,
 }) {
     const textSize: TextProps["size"] = {
+        initial: "2",
         xs: "2",
         sm: "2",
         md: "4",
@@ -60,6 +61,7 @@ function CourseInformation({
         <Flex
             direction="row"
             gap={{
+                initial: "4",
                 xs: "4",
                 sm: "4",
                 md: "1"
@@ -71,6 +73,7 @@ function CourseInformation({
             <Flex
                 direction="column"
                 gap={{
+                    initial: "3",
                     xs: "3",
                     sm: "3",
                     md: "1",
@@ -81,6 +84,7 @@ function CourseInformation({
                 <Heading 
                     as="h4"
                     size={{
+                        initial: "4",
                         xs: "4",
                         sm: "4",
                         md:"5",

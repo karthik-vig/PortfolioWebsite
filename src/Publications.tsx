@@ -31,6 +31,7 @@ function PublicationInfo({
                     mb-3 \
                     "
                     size={{
+                        initial: "3",
                         xs: "3",
                         sm: "3",
                         md:"5",

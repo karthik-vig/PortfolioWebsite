@@ -40,6 +40,7 @@ function ContactInfo({
         target: "_black",
         weight: "regular",
         size: {
+            initial: "3",
             xs: "3",
             sm: "3",
             md: "6",
@@ -50,6 +51,7 @@ function ContactInfo({
     return (
         <Flex
             direction={{
+                initial: "column",
                 xs: "column",
                 sm: "column",
                 md: "row",
@@ -116,6 +118,7 @@ export default function About() {
         >
             <Flex
                 mt={{
+                    initial: "9",
                     xs: "9",
                     sm: "9",
                     md: "5",
@@ -131,6 +134,7 @@ export default function About() {
                     mt="10%"
                     align="center"
                     size={{
+                        initial: "7",
                         xs: "7",
                         sm: "7",
                         md: "9"
@@ -148,6 +152,7 @@ export default function About() {
                 </Heading>
                 <Text
                     size={{
+                        initial: "3",
                         xs: "3",
                         sm: "3",
                         md: "6",

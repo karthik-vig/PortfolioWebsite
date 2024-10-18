@@ -68,6 +68,7 @@ function CertificateInfo({
                         mb-3 \
                         "
                         size={{
+                            initial: "4",
                             xs: "4",
                             sm: "4",
                             md:"7",
@@ -87,6 +88,7 @@ function CertificateInfo({
                         text-slate-100 \
                         "
                         size={{
+                            initial: "3",
                             xs: "3",
                             sm: "3",
                             md:"6",

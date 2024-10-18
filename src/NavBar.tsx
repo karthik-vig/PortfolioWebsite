@@ -100,6 +100,7 @@ function NavBarTab({
             <Heading
                 as="h6"
                 size={{
+                    initial: "4",
                     sm: "4",
                     md: "4",
                     lg: "4",
@@ -243,6 +244,7 @@ export default function NavBar() {
             data-change-nav-bar-bg={changeNavBarBg}
             data-show-nav-bar={showNavBar}
             direction={{
+                initial: "column",
                 xs: "column",
                 sm: "column",
                 md: "row",

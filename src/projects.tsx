@@ -223,6 +223,7 @@ export default function Projects() {
             <Flex
                 direction="row"
                 wrap={{
+                    initial: "nowrap",
                     xs: "nowrap",
                     sm: "nowrap",
                     md: "wrap"
