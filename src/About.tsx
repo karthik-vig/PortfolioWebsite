@@ -38,7 +38,7 @@ function ContactInfo({
 }) {
     const linkRenderSetting: LinkProps = {
         target: "_black",
-        weight: "regular",
+        weight: "bold",
         size: {
             initial: "3",
             xs: "3",
