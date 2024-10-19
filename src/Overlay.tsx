@@ -1,5 +1,5 @@
 import {
-    // Flex,
+    Flex,
     Box,
 } from '@radix-ui/themes';
 
@@ -19,52 +19,63 @@ export default function Overlay({
     h-[100vh] \
     bg-white/20 \
     backdrop-blur-lg \
+    data-[opacity-change=full]:animate-overlayOpacityFadeOut \
+    data-[opacity-change=none]:animate-overlayOpacityFadeOut \
     ";
     return (
-        // <Flex
-        //     direction="column"
-        //     justify="center"
-        //     align="center"
-        //     className="\
-        //     bg-white/30 \
-        //     backdrop-blur-lg \
-        //     "
-        // >
+        <Flex
+            direction="column"
+            gap="2"
+            justify="center"
+            align="center"
+            data-opacity-change={triggerOverlay? "full": "none"}
+            className={cssClassName}
+            width={String(screenDisplayWidth)+"px"}
+            hidden={!triggerOverlay}
+        >
             <Box
-                className={cssClassName}
-                width={String(screenDisplayWidth)+"px"}
-                hidden={!triggerOverlay}
+                height="50%"
+                width="50%"
+                className="relative top-[25vh]"
             >
-                <img 
-                    src="./src/assets/images/personal_portfolio_icon_bg.svg"
-                    alt="logo background"
-                    className="\
-                    absolute \
-                    top-[37.5vh] \
-                    left-[37.5vw] \
-                    z-10 \
-                    max-h-[25vh] \
-                    max-w-[25vw] \
-                    min-h-[25vh] \
-                    min-w-[25vw] \
-                    "
-                />
-                <img 
-                    src="./src/assets/images/personal_portfolio_icon_fg.svg"
-                    alt="logo foreground"
-                    className="\
-                    absolute \
-                    top-[37.5vh] \
-                    left-[37.5vw] \
-                    z-20 \
-                    max-h-[25vh] \
-                    max-w-[25vw] \
-                    min-h-[25vh] \
-                    min-w-[25vw] \
-                    animate-spin \
-                    "
-                />
+            <img 
+                src="./src/assets/images/personal_portfolio_icon_bg.svg"
+                alt="logo background"
+                className="\
+                absolute \
+                top-0 \
+                left-0 \
+                z-10 \
+                h-[100%] w-[100%] \
+                "
+            />
+            <img 
+                src="./src/assets/images/personal_portfolio_icon_fg.svg"
+                alt="logo foreground"
+                className="\
+                absolute \
+                top-0 left-[25%] \
+                z-20 \
+                h-[100%] w-[50%] \
+                animate-gearWheelSpin \
+                "
+            />
             </Box>
-        // </Flex>
+            <img 
+                src="./src/assets/images/website enter text.svg"
+                alt="introductary hello text"
+                className="\
+                h-auto \
+                w-auto \
+                p-10 \
+                min-h-32 \
+                min-w-52 \
+                max-h-[300px] \
+                max-w-[500px] \
+                mt-[20vh] \
+                md:mt-[30vh] \
+                "
+            />
+        </Flex>
     );
 }

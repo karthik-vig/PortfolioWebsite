@@ -137,6 +137,22 @@ const Animations = {
             to: {
                 height: "var(--timeline-height)"
             }
+        },
+        gearWheelSpin: {
+            from: {
+                transform: "rotateZ(0deg)"
+            },
+            to: {
+                transform: "rotateZ(360deg)"
+            }
+        },
+        overlayOpacityFadeOut: {
+            from: {
+                opacity: "1",
+            },
+            to: {
+                opacity: "0",
+            }
         }
     },
     animation: {
@@ -156,6 +172,8 @@ const Animations = {
         bottomLineToCross: "bottomLineToCross 200ms ease-in-out",
         bottomLineToUnCross: "bottomLineToUnCross 200ms ease-in-out",
         inctimelineheight: "inctimelineheight 400ms ease-in-out",
+        gearWheelSpin: "gearWheelSpin 1s cubic-bezier(.69,.18,.39,.76)",
+        overlayOpacityFadeOut: "overlayOpacityFadeOut 1s ease-in-out 1s",
     }
 };
 
