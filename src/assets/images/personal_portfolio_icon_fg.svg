@@ -3,8 +3,8 @@
 
 <svg
    width="89.575363mm"
-   height="90.363579mm"
-   viewBox="0 0 89.575363 90.363579"
+   height="90.363594mm"
+   viewBox="0 0 89.575363 90.363594"
    version="1.1"
    id="svg1"
    xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@
      id="defs1" />
   <g
      id="layer1"
-     transform="matrix(0.86656857,0,0,0.87633652,-49.11733,-146.34108)">
+     transform="matrix(0.86656857,0,0,0.87633652,-49.117332,-146.34107)">
     <rect
        style="fill:#94bde6;fill-opacity:1;stroke:#b8ffff;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.1"
        id="rect8-7"
