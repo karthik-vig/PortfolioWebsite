@@ -3,7 +3,6 @@ import {
     Link,
     Flex,
     Button,
-    Box,
  } from '@radix-ui/themes'
 import Data from './assets/data/data.ts'
 import {  
@@ -27,20 +26,22 @@ function ToggleNavBar({
         position: number;
     }) => {
         const cssClassName = "\
-            w-5 \
-            h-[2px] \
-            my-[5px] \
+            min-w-10 \
+            max-w-10 \
+            min-h-1 \
+            max-h-1 \
+            my-1 \
             bg-slate-100 \
             border-0 \
             rounded-lg \
             data-[toggle=true]:data-[position=0]:rotate-45 \
-            data-[toggle=true]:data-[position=0]:translate-y-[6.5px] \
+            data-[toggle=true]:data-[position=0]:translate-y-[0.7rem] \
             data-[toggle=false]:data-[position=0]:rotate-0 \
             data-[toggle=false]:data-[position=0]:translate-y-0 \
             data-[toggle=true]:data-[position=1]:opacity-0 \
             data-[toggle=false]:data-[position=1]:opacity-1 \
             data-[toggle=true]:data-[position=2]:-rotate-45 \
-            data-[toggle=true]:data-[position=2]:-translate-y-[6.5px] \
+            data-[toggle=true]:data-[position=2]:-translate-y-[0.7rem] \
             data-[toggle=false]:data-[position=2]:rotate-0 \
             data-[toggle=false]:data-[position=2]:translate-y-0 \
             data-[toggle=true]:data-[position=0]:animate-topLineToCross \
@@ -59,12 +60,17 @@ function ToggleNavBar({
     };
 
     return (
-        <Box
+        <Flex
+            direction="column"
+            align="center"
+            justify="center"
             data-toggle={toggle}
             className="\
             p-1 \
-            max-h-8 \
-            max-w-8 \
+            max-h-auto \
+            max-w-10 \
+            mt-5 \
+            ml-5 \
             "
         >
             <Line 
@@ -79,7 +85,7 @@ function ToggleNavBar({
                 toggle={toggle}
                 position={2}
             />
-        </Box>
+        </Flex>
     );
 }
 
@@ -100,8 +106,9 @@ function NavBarTab({
             <Heading
                 as="h6"
                 size={{
-                    initial: "4",
-                    sm: "4",
+                    initial: "7",
+                    xs: "7",
+                    sm: "7",
                     md: "4",
                     lg: "4",
                 }}

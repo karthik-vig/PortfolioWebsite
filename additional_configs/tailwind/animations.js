@@ -103,12 +103,12 @@ const Animations = {
                 transform: "translateY(0px) rotate(0deg)"
             },
             to: {
-                transform: "translateY(6.5px) rotate(45deg)"
+                transform: "translateY(0.7rem) rotate(45deg)"
             }
         },
         topLineToUnCross: {
             from: {
-                transform: "translateY(6.5px) rotate(45deg)"
+                transform: "translateY(0.7rem) rotate(45deg)"
             },
             to: {
                 transform: "translateY(0px) rotate(0deg)"
@@ -119,12 +119,12 @@ const Animations = {
                 transform: "translateY(0px) rotate(0deg)"
             },
             to: {
-                transform: "translateY(-6.5px) rotate(-45deg)"
+                transform: "translateY(-0.7rem) rotate(-45deg)"
             }
         },
         bottomLineToUnCross: {
             from: {
-                transform: "translateY(-6.5px) rotate(-45deg)"
+                transform: "translateY(-0.7rem) rotate(-45deg)"
             },
             to: {
                 transform: "translateY(0px)  rotate(0deg)"
