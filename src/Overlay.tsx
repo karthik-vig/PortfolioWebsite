@@ -26,7 +26,7 @@ export default function Overlay({
         <Flex
             direction="column"
             gap="2"
-            justify="center"
+            //justify="center"
             align="center"
             data-opacity-change={triggerOverlay? "full": "none"}
             className={cssClassName}
@@ -34,9 +34,11 @@ export default function Overlay({
             hidden={!triggerOverlay}
         >
             <Box
-                height="50%"
-                width="50%"
-                className="relative top-[15vh]"
+                className="\
+                relative top-[10vh] \
+                h-[40%] w-[40%] \
+                sm:h-[50%] md:w-[50%] \
+                "
             >
                 <img 
                     src="./src/assets/images/personal_portfolio_icon_bg.svg"
@@ -66,13 +68,13 @@ export default function Overlay({
                 alt="introductary hello text"
                 className="\
                 h-auto \
-                w-auto \
+                w-[100%] \
                 p-10 \
-                min-h-32 \
-                min-w-52 \
+                min-h-20 \
+                min-w-40 \
                 max-h-[300px] \
-                max-w-[500px] \
-                mt-[10vh] \
+                max-w-[800px] \
+                m-1 \
                 md:mt-[30vh] \
                 "
             />
