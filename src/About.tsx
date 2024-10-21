@@ -11,7 +11,6 @@ import {
 interface ContactInfoTemplate {
     name: string;
     email: string;
-    address: string;
     linkedin: string;
     github: string;
 }
@@ -104,7 +103,6 @@ export default function About() {
     const emptyContactInfo: ContactInfoTemplate = {
         name: "",
         email: "",
-        address: "",
         linkedin: "",
         github: "",
     };
@@ -144,11 +142,6 @@ export default function About() {
                     "
                 >
                     🎯 About Me 🎯
-                    {/* <p
-                        className="font-pacifico"
-                    >
-                        Hello
-                    </p> */}
                 </Heading>
                 <Text
                     size={{
