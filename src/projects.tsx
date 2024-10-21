@@ -122,7 +122,7 @@ function ProjectInfoCard({
             onMouseLeave={resetRotation}
             style={{
                 transform: `perspective(1000px) rotateX(${rotateBox.x}deg) rotateY(${rotateBox.y}deg)`,
-                transition: `transform 200ms ease-out, box-shadow 100ms ease-out`,
+                transition: `transform 50ms ease-out, box-shadow 50ms ease-out`,
                 boxShadow: `${boxShadow.x}px ${boxShadow.y}px 10px rgba(0,0,0,0.3)`,
             }}
         >
