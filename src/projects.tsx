@@ -15,7 +15,146 @@ import {
 } from 'react';
 import Data from './assets/data/data';
 
+// function used by both the touch input handlers
+// as well as the mouse input handlers to tilt the card
+function handleCardTiltAction(
+    pointerPosition: {x: number; y: number;},
+    event: React.MouseEvent | React.TouchEvent,
+    setRotateBox: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+    setBoxShadow: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+) {
+     // get the dimension and location of the element
+     const {
+        left: boxPositionX,
+        top: boxPositionY,
+        height: boxHeight,
+        width: boxWidth
+    } = event.currentTarget.getBoundingClientRect();
+    // essentiallly finding the center of the element
+    const boxHalfDim = {
+        halfHeight: boxHeight / 2,
+        halfWidth: boxWidth / 2,
+    }
+    // calculate the local mouse position
+    const localInputPointerPosition = {
+        x: pointerPosition.x - boxPositionX,
+        y: pointerPosition.y - boxPositionY,
+    };
+    // convert the local mouse position to percentage ratio
+    // so that we can assign an angle out of the max allowed
+    // angle
+    const rotationRatio = {
+        x: (localInputPointerPosition.x - boxHalfDim.halfWidth) / boxHalfDim.halfWidth,
+        y: (localInputPointerPosition.y - boxHalfDim.halfHeight) / boxHalfDim.halfHeight,
+    };
+    // set the + / - degree of rotation based on the quadrant 
+    // the mouse is currently in
+    const maxRotation = 10;
+    const rotationDirection = {
+        x: (localInputPointerPosition.y >= boxHalfDim.halfHeight)? -1: 1,
+        y: (localInputPointerPosition.x >= boxHalfDim.halfWidth)? 1: -1,
+    };
+    // implement a cutoff; so that the user don't
+    // feel sick
+    let allowRotation = 1;
+    const allowRotationCutoff = {
+        x: 0.3,
+        y: 0.4,
+    };
+    if ( Math.abs(rotationRatio.x) <= allowRotationCutoff.x &&
+    Math.abs(rotationRatio.y) <= allowRotationCutoff.y ) {
+        allowRotation = 0;
+    }
+    const rotateX = Math.abs(maxRotation * rotationRatio.y) * rotationDirection.x * allowRotation;
+    const rotateY = Math.abs(maxRotation * rotationRatio.x) * rotationDirection.y * allowRotation;
 
+    // const rotate3d = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    // console.log(rotate3d);
+    setRotateBox({x: rotateX, y: rotateY});
+
+    // dynamically set the box shadow based on the same
+    // rotationRatio calculated earlier
+    const maxBoxShadow = {
+        x: 30,
+        y: 30,
+    };
+    const boxShadowDirection = {
+        x: (localInputPointerPosition.x >= boxHalfDim.halfWidth)? -1: 1,
+        y: (localInputPointerPosition.y >= boxHalfDim.halfHeight )? -1: 1,
+    }
+    const currentBoxShadow = {
+        x: Math.abs(maxBoxShadow.x * rotationRatio.x) * boxShadowDirection.x,
+        y: Math.abs(maxBoxShadow.y * rotationRatio.y) * boxShadowDirection.y,
+    }
+    setBoxShadow(currentBoxShadow);
+}
+
+// function closure to generate the functions
+// needed to handle the touch input on project cards
+function generateTouchHandlers(
+    setRotateBox: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+    setBoxShadow: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+) {
+    const touchPosition = {
+        x: 0,
+        y: 0,
+    };
+
+    const tiltCard = (event: React.TouchEvent) => {
+        const touch = event.touches[0];
+        touchPosition.x = touch.clientX;
+        touchPosition.y = touch.clientY;
+        handleCardTiltAction(
+            touchPosition,
+            event,
+            setRotateBox,
+            setBoxShadow,
+        );
+    }
+
+    const handleTouchStart = tiltCard;
+    
+    const handleTouchMove = tiltCard;
+
+    const handleTouchEnd = () => {
+        touchPosition.x = 0;
+        touchPosition.y = 0;
+        setRotateBox({x: 0, y: 0});
+        setBoxShadow({x: 0, y: 0});
+    };
+
+    return [handleTouchStart, handleTouchMove, handleTouchEnd];
+}
+
+// function closure to generate the functions
+// needed to handle the mounse input on project cards
+function generateMouseHandlers(
+    setRotateBox: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+    setBoxShadow: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+) {
+    const rotateOnMouseMovement = (event: React.MouseEvent) => {
+        const pointerPosition = {
+            x: event.clientX,
+            y: event.clientY,
+        }
+        handleCardTiltAction(
+            pointerPosition,
+            event,
+            setRotateBox,
+            setBoxShadow
+        );
+    };
+
+    const resetRotation = () => {
+        setRotateBox({x: 0, y: 0});
+        setBoxShadow({x: 0, y: 0});
+    }
+
+    return [rotateOnMouseMovement, resetRotation];
+}
+
+// the project card component; forms a single 
+// item in a list of project cards
 function ProjectInfoCard({
     projectName, 
     technologyStack,
@@ -33,77 +172,22 @@ function ProjectInfoCard({
     const [rotateBox, setRotateBox] = useState<{x: number; y: number;}>({x: 0, y: 0});
     const [boxShadow, setBoxShadow] = useState<{x: number; y: number;}>({x: 0, y: 0});
 
-    const rotateOnMouseMovement = (event: React.MouseEvent) => {
-        // get the dimension and location of the element
-        const {
-            left: boxPositionX,
-            top: boxPositionY,
-            height: boxHeight,
-            width: boxWidth
-        } = event.currentTarget.getBoundingClientRect();
-        // essentiallly finding the center of the element
-        const boxHalfDim = {
-            halfHeight: boxHeight / 2,
-            halfWidth: boxWidth / 2,
-        }
-        // calculate the local mouse position
-        const mousePosition = {
-            x: event.clientX - boxPositionX,
-            y: event.clientY - boxPositionY,
-        };
-        // convert the local mouse position to percentage ratio
-        // so that we can assign an angle out of the max allowed
-        // angle
-        const rotationRatio = {
-            x: (mousePosition.x - boxHalfDim.halfWidth) / boxHalfDim.halfWidth,
-            y: (mousePosition.y - boxHalfDim.halfHeight) / boxHalfDim.halfHeight,
-        };
-        // set the + / - degree of rotation based on the quadrant 
-        // the mouse is currently in
-        const maxRotation = 10;
-        const rotationDirection = {
-            x: (mousePosition.y >= boxHalfDim.halfHeight)? -1: 1,
-            y: (mousePosition.x >= boxHalfDim.halfWidth)? 1: -1,
-        };
-        // implement a cutoff; so that the user don't
-        // feel sick
-        let allowRotation = 1;
-        const allowRotationCutoff = {
-            x: 0.3,
-            y: 0.4,
-        };
-        if ( Math.abs(rotationRatio.x) <= allowRotationCutoff.x &&
-        Math.abs(rotationRatio.y) <= allowRotationCutoff.y ) {
-            allowRotation = 0;
-        }
-        const rotateX = Math.abs(maxRotation * rotationRatio.y) * rotationDirection.x * allowRotation;
-        const rotateY = Math.abs(maxRotation * rotationRatio.x) * rotationDirection.y * allowRotation;
+    const [
+        rotateOnMouseMovement,
+        resetRotation,
+    ] = generateMouseHandlers(
+        setRotateBox,
+        setBoxShadow
+    );
 
-        // const rotate3d = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        // console.log(rotate3d);
-        setRotateBox({x: rotateX, y: rotateY});
-
-        // dynamically set the box shadow based on the same
-        // rotationRatio calculated earlier
-        const maxBoxShadow = {
-            x: 30,
-            y: 30,
-        };
-        const boxShadowDirection = {
-            x: (mousePosition.x >= boxHalfDim.halfWidth)? -1: 1,
-            y: (mousePosition.y >= boxHalfDim.halfHeight )? -1: 1,
-        }
-        const currentBoxShadow = {
-            x: Math.abs(maxBoxShadow.x * rotationRatio.x) * boxShadowDirection.x,
-            y: Math.abs(maxBoxShadow.y * rotationRatio.y) * boxShadowDirection.y,
-        }
-        setBoxShadow(currentBoxShadow);
-    };
-
-    const resetRotation = () => {
-        setRotateBox({x: 0, y: 0});
-        setBoxShadow({x: 0, y: 0});
-    }
+    const [
+        handleTouchStart,
+        handleTouchMove,
+        handleTouchEnd
+    ] = generateTouchHandlers(
+        setRotateBox,
+        setBoxShadow
+    )
 
     return (
         <Box
@@ -120,6 +204,9 @@ function ProjectInfoCard({
             "
             onMouseMoveCapture={rotateOnMouseMovement}
             onMouseLeave={resetRotation}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
             style={{
                 transform: `perspective(1000px) rotateX(${rotateBox.x}deg) rotateY(${rotateBox.y}deg)`,
                 transition: `transform 50ms ease-out, box-shadow 50ms ease-out`,
