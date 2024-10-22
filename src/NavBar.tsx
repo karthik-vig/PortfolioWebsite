@@ -269,7 +269,10 @@ export default function NavBar() {
                 width="50px"
                 src="./src/assets/images/personal_portfolio_icon.svg"
                 alt="personal portfolio logo"
-                className="max-[520px]:mt-5"
+                className="\
+                max-[520px]:mt-5 \
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             />
             {
                 Data.navBar.map((element: object, idx: number) => {

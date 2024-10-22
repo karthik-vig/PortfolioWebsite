@@ -71,6 +71,23 @@
          id="stop125" />
     </linearGradient>
     <linearGradient
+       id="linearGradient6-2-2"
+       gradientTransform="scale(0.59970757,1.6674794)"
+       x1="-2.9058995"
+       y1="98.231804"
+       x2="9.0610847"
+       y2="98.231804"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         style="stop-color:#0b6db9;stop-opacity:1;"
+         offset="0"
+         id="stop5-1-5" />
+      <stop
+         style="stop-color:#0b6db9;stop-opacity:0;"
+         offset="1"
+         id="stop6-6-4" />
+    </linearGradient>
+    <linearGradient
        xlink:href="#linearGradient5"
        id="linearGradient639-4"
        gradientUnits="userSpaceOnUse"
@@ -1377,7 +1394,7 @@
        y2="47.363007" />
   </defs>
   <rect
-     style="display:none;fill:#ffffff;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.1"
+     style="display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.1"
      id="rect2-0"
      width="218.93422"
      height="302.31067"
@@ -1704,7 +1721,7 @@
   </g>
   <g
      id="layer3-2"
-     style="display:inline"
+     style="display:none"
      transform="matrix(1.4314604,-0.0715298,0.06082332,1.2172015,-20.517187,-85.305696)">
     <path
        style="display:inline;fill:url(#linearGradient125-8);stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.1"
@@ -1719,7 +1736,7 @@
        transform="matrix(0.98051979,0,0,0.88621609,3.7567179,21.493391)"
        style="display:inline">
       <path
-         style="fill:#d9d7ba;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.1"
+         style="fill:url(#linearGradient6-2-2);stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.1"
          d="m 1.2330116,183.75421 0.1750379,-6.30149 -3.1507394,0.17505 2.8006636,-4.20099 -2.2755385,1.22529 1.92545131,-4.37604 -1.75041341,1.57537 3.5008267,-8.05189 2.4505764,6.65157 -1.7504134,-0.70018 1.2252882,4.02596 -1.5753639,-0.52513 2.6256142,4.20099 H 3.3335122 l -0.1750494,5.25124 z"
          id="path5-3-7" />
       <path

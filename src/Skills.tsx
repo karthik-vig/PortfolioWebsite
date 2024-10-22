@@ -66,6 +66,9 @@ function SkillSection({children, title}: {children: string[], title: string}) {
                     sm: "4",
                     md:"5",
                 }}
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 {title}
             </Text>
@@ -101,7 +104,11 @@ function SkillSection({children, title}: {children: string[], title: string}) {
                             <li
                                 key={idx}
                             >   
-                                <Text>
+                                <Text
+                                    className="\
+                                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                                    "
+                                >
                                     {`⭐️ ${element}`}
                                 </Text>
                             </li>
@@ -124,6 +131,9 @@ export default function Skills() {
                 mb="6"
                 mt="100px"
                 align="left"
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 💪 Skills
             </Heading>

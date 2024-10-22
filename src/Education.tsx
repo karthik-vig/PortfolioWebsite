@@ -45,6 +45,9 @@ function CourseInformation({
             <Text
                 weight="medium"
                 size={textSize}
+                className="
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 {children.duration}
             </Text>
@@ -80,6 +83,9 @@ function CourseInformation({
                 }}
                 width="auto"
                 dir="ltr"
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 <Heading 
                     as="h4"
@@ -244,6 +250,7 @@ function EducationVerticalLine({
                 data-[content-view-status=true]:animate-inctimelineheight \
                 data-[content-view-status=true]:h-[100%] \
                 data-[content-view-status=false]:h-0 \
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
                 "
             >
             </div>
@@ -299,6 +306,9 @@ export default function Education() {
                 mb="6"
                 mt="100px"
                 align="left"
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 🎓 Education
             </Heading>

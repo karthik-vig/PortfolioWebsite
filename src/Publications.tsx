@@ -29,6 +29,7 @@ function PublicationInfo({
                 <Heading
                     className="\
                     mb-3 \
+                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
                     "
                     size={{
                         initial: "3",
@@ -47,7 +48,11 @@ function PublicationInfo({
                         {children.title}
                     </Link>
                 </Heading>
-                <Text>
+                <Text
+                    className="\
+                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                    "
+                >
                     {`${children.publisher} (${children.date})`}
                 </Text>
             </Flex>
@@ -66,6 +71,9 @@ export default function Publications() {
                 mb="6"
                 mt="100px"
                 align="left"
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 📜 Publications
             </Heading>

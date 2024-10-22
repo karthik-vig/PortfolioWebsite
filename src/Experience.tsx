@@ -139,6 +139,9 @@ export default function Experience() {
                 mb="6"
                 mt="100px"
                 align="left"
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 💼 Experience
             </Heading>

@@ -22,28 +22,6 @@ import Parallax, {
 } from './Parallax'
 
 
-// function SetupParallax() {
-//   return (
-//     <Parallax 
-//         parallaxLayers={[
-//           {
-//             src: "./src/assets/images/parallaxLayers/bg_layer.svg",
-//             movementRate: 1,
-//             position: {
-//               x: 0,
-//               y: 0,
-//             },
-//             dimension: {
-//               width: "1000px",
-//               height: "1000px",
-//             }
-//           },
-//         ]}
-//     />
-//   );
-// }
-
-
 function App({
   appOverflow,
 }:{
@@ -62,7 +40,6 @@ function App({
       "
       height={appOverflow? "auto": "100vh"}
     > 
-      {/* <SetupParallax /> */}
       <NavBar />
       <About />
       <Skills />
@@ -101,25 +78,47 @@ function Main() {
 
   const parallaxLayers: parallaxLayersTemplate[] = [
     {
-      src: "./src/assets/images/parallaxLayers/bg_layer.svg",
+      src: "./src/assets/images/parallaxLayers/white_base_bg.svg",
       movementY: {
         start: 0,
-        end: 0.9,
+        end: 0,
       },
       dimension: {
-        height: 60,
-        width: 70,
+        height: 100,
+        width: 100,
+      }
+    },
+    {
+      src: "./src/assets/images/parallaxLayers/bg_layer.svg",
+      movementY: {
+        start: -0.05,
+        end: 0,
+      },
+      dimension: {
+        height: 100,
+        width: 100,
+      }
+    },
+    {
+      src: "./src/assets/images/parallaxLayers/middle_layer.svg",
+      movementY: {
+        start: 0.1,
+        end: 0,
+      },
+      dimension: {
+        height: 100,
+        width: 100,
       }
     },
     {
       src: "./src/assets/images/parallaxLayers/fg_layer.svg",
       movementY: {
-        start: 0.9,
+        start: 0.2,
         end: 0,
       },
       dimension: {
-        height: 50,
-        width: 50,
+        height: 100,
+        width: 100,
       }
     },
   ];

@@ -70,13 +70,16 @@ function ParallayLayer({
         <image
             ref={svgLayer}
             href={parallaxLayer.src}
-            x={`${svgLayerXPosition}px`}
+            x={`${svgLayerXPosition}%`}
             y={`${svgLayerYPosition * 100}%`}
             width={`${parallaxLayer.dimension.width}%`}
             height={`${parallaxLayer.dimension.height}%`}
             className="absolute top-0 left-0"
             style={{
                 zIndex: String(zIndex),
+                padding: "0",
+                margin: "0",
+                border: "0",
             }}
         />
     );
@@ -93,9 +96,18 @@ export default function Parallax({
     return (
         <svg
             className="\
-            fixed z-10 top-0 left-0 h-[100vh] w-auto\
+            fixed z-10 top-0 left-0 \
             "
+            viewBox="0 0 1475 945"
+            preserveAspectRatio="xMaxYMax slice"
+            // preserveAspectRatio="none"
+            height="100vh"
             width={screenDisplayWidth+"px"}
+            style={{
+                padding: "0",
+                margin: "0",
+                border: "0",
+            }}
         >
             {
                 parallaxLayers.map((element: parallaxLayersTemplate, idx: number) => {

@@ -66,6 +66,7 @@ function CertificateInfo({
                     <Heading
                         className="\
                         mb-3 \
+                        drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
                         "
                         size={{
                             initial: "4",
@@ -86,6 +87,7 @@ function CertificateInfo({
                         weight="bold"
                         className="\
                         text-slate-100 \
+                        drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
                         "
                         size={{
                             initial: "3",
@@ -166,6 +168,9 @@ export default function Certificates(){
                 mb="6"
                 mt="100px"
                 align="left"
+                className="\
+                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                "
             >
                 📜 Certificates
             </Heading>
