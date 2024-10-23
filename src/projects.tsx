@@ -12,6 +12,7 @@ import {
 } from '@radix-ui/themes';
 import {
     useState,
+    useMemo,
 } from 'react';
 import Data from './assets/data/data';
 
@@ -177,19 +178,29 @@ function ProjectInfoCard({
     const [
         rotateOnMouseMovement,
         resetRotation,
-    ] = generateMouseHandlers(
+    ] = useMemo(() => {
+        return generateMouseHandlers(
+            setRotateBox,
+            setBoxShadow
+        );
+    },[
         setRotateBox,
-        setBoxShadow
-    );
+        setBoxShadow,
+    ]);
 
     const [
         handleTouchStart,
         handleTouchMove,
-        handleTouchEnd
-    ] = generateTouchHandlers(
+        handleTouchEnd,
+    ] = useMemo(() => {
+        return generateTouchHandlers(
+            setRotateBox,
+            setBoxShadow
+        );
+    }, [
         setRotateBox,
-        setBoxShadow
-    )
+        setBoxShadow,
+    ]);
 
     return (
         <Box
