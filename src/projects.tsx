@@ -112,7 +112,8 @@ function generateTouchHandlers(
         );
     }
 
-    const handleTouchStart = tiltCard;
+    // no functionality to be triggered on touch
+    const handleTouchStart = () => {};
     
     const handleTouchMove = tiltCard;
 
