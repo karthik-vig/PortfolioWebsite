@@ -140,8 +140,6 @@ export default function Experience() {
             window.removeEventListener("scroll", handleExperienceContainerAnimation);
         }
     }, [
-        animationTriggered,
-        setAnimationTriggered,
         handleExperienceContainerAnimation,
     ]);
     

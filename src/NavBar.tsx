@@ -158,8 +158,6 @@ export default function NavBar() {
             window.removeEventListener("scroll", handleNavBarBgChange);
         }
     }, [
-        changeNavBarBg,
-        setChangeNavBarBg,
         handleNavBarBgChange,
     ])
 
@@ -218,6 +216,8 @@ export default function NavBar() {
         setCssClassName,
         setToggleNavBarButtonDisplay,
         smallScreenBreakPointSize,
+        largeScreenCssClassName,
+        smallScreenCssClassName,
     ]);
 
     useEffect(() => {
@@ -230,12 +230,7 @@ export default function NavBar() {
     ]);
 
     useEffect(changeNavBarClass, [
-        setCssClassName,
-        largeScreenCssClassName,
-        smallScreenCssClassName,
         navBar,
-        smallScreenBreakPointSize,
-        setToggleNavBarButtonDisplay,
         changeNavBarClass,
     ]);
 

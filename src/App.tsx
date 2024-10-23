@@ -63,10 +63,12 @@ function Main() {
     if (main.current === null) return;
     const mainWidth = main.current.getBoundingClientRect().width;
     setScreenDisplayWidth(mainWidth);
-  }, []);
+  }, [
+    main,
+    setScreenDisplayWidth,
+  ]);
 
   useEffect(handleSetMainScreenSize, [
-    setScreenDisplayWidth,
     screenDisplayWidth,
     appOverflow,
     handleSetMainScreenSize,

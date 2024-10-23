@@ -68,8 +68,6 @@ function ParallayLayer({
         }
     }, [
         handleSetSVGLayerYPosition,
-        setSvgLayerYPosition,
-        svgLayerYPosition,
     ]);
     
 
@@ -82,6 +80,7 @@ function ParallayLayer({
     }, [
         screenDisplayWidth,
         setSvgLayerXPosition,
+        svgLayer,
     ]);
 
     return (
@@ -128,10 +127,6 @@ export default function Parallax({
     ]);
 
     useLayoutEffect(calculateViewBox, [
-        svgComponent,
-        viewBox,
-        setViewBox,
-        screenDisplayWidth,
         calculateViewBox
     ]);
 
@@ -141,10 +136,6 @@ export default function Parallax({
             window.removeEventListener("resize", calculateViewBox);
         }
     }, [
-        svgComponent,
-        viewBox,
-        setViewBox,
-        screenDisplayWidth,
         calculateViewBox,
     ]);
     

@@ -149,6 +149,7 @@ function Course({
             </Flex>
         </Box>
     ));
+
     useLayoutEffect(() => {
         if (drawEmpty && courseBox?.current != null) {
             const courseBoxHeight = courseBox.current.clientHeight;
@@ -163,8 +164,9 @@ function Course({
     }, [
         drawEmpty,
         courseBox,
-        drawComponent,
+        setDrawComponent,
     ]);
+
     return drawComponent;
 }
 
@@ -307,8 +309,6 @@ export default function Education() {
             window.removeEventListener("scroll", handleContentViewStatus);
         }
     }, [
-        setContentViewStatus,
-        contentViewStatus,
         handleContentViewStatus,
     ]);
     
