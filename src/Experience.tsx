@@ -5,6 +5,7 @@ import {
     Flex,
 } from '@radix-ui/themes';
 import {
+    useCallback,
     useEffect,
     useRef,
     useState,
@@ -101,7 +102,8 @@ export default function Experience() {
     // const [startAnimation, setStartAnimation] = useImmer<string[]>(Array<string>(Data.experience.length).fill("false"))
     const [animationTriggered, setAnimationTriggered] = useState<boolean>(false);
     const experienceContainer = useRef<HTMLDivElement>(null);
-    window.addEventListener("scroll", ()=>{
+
+    const  handleExperienceContainerAnimation = useCallback(()=>{
         const experienceContainerXTopLocation = experienceContainer.current?.getBoundingClientRect().top;
         const experienceContainerXBottomLocation = experienceContainer.current?.getBoundingClientRect().bottom;
         if (experienceContainerXTopLocation === undefined ||
@@ -127,7 +129,22 @@ export default function Experience() {
             // console.log("reset animation triggered", animationTriggered)
             setAnimationTriggered(false);
         }
-    });
+    }, [
+        animationTriggered,
+        setAnimationTriggered,
+    ]);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleExperienceContainerAnimation);
+        return () => {
+            window.removeEventListener("scroll", handleExperienceContainerAnimation);
+        }
+    }, [
+        animationTriggered,
+        setAnimationTriggered,
+        handleExperienceContainerAnimation,
+    ]);
+    
     return (
         <Container
            id="experience"

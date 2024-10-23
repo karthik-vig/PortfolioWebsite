@@ -2,6 +2,8 @@
 //     Flex,
 // } from '@radix-ui/themes';
 import {
+    useCallback,
+    useEffect,
     useLayoutEffect,
     useRef,
     useState,
@@ -42,7 +44,7 @@ function ParallayLayer({
     const [ svgLayerYPosition, setSvgLayerYPosition ] = useState<number>(parallaxLayer.movementY.start);
     const [ svgLayerXPosition, setSvgLayerXPosition ] = useState<number>(0);
 
-    window.addEventListener('scroll', () => {
+    const handleSetSVGLayerYPosition = useCallback(() => {
         if (svgLayer.current === null) return;
         const domScrollHeight = document.documentElement.scrollHeight;
         const currentDomScrollYPosition = document.documentElement.scrollTop;
@@ -53,7 +55,23 @@ function ParallayLayer({
         const currentImageYPosition = parallaxLayer.movementY.start + movementYRange * scrolledRatio;
         // console.log(currentImageYPosition);
         setSvgLayerYPosition(currentImageYPosition);
-    });
+    }, [
+        setSvgLayerYPosition,
+        parallaxLayer.movementY.start,
+        parallaxLayer.movementY.end,
+    ]);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleSetSVGLayerYPosition);
+        return () => {
+            window.removeEventListener("scroll", handleSetSVGLayerYPosition);
+        }
+    }, [
+        handleSetSVGLayerYPosition,
+        setSvgLayerYPosition,
+        svgLayerYPosition,
+    ]);
+    
 
     useLayoutEffect(() => {
         // console.log("svg image layer use layout effect called");
@@ -97,22 +115,39 @@ export default function Parallax({
     const svgComponent = useRef<SVGSVGElement>(null);
     const [ viewBox, setViewBox ] = useState<string>("0 0 100 100");
 
-    const calculateViewBox = () => {
+    const calculateViewBox = useCallback(() => {
         if (svgComponent.current === null) return;
         const {
             height: svgComponentHeight,
         } = svgComponent.current.getBoundingClientRect();
         setViewBox(`0 0 ${screenDisplayWidth} ${svgComponentHeight}`);
-    };
+    },[
+        svgComponent,
+        setViewBox,
+        screenDisplayWidth,
+    ]);
 
     useLayoutEffect(calculateViewBox, [
         svgComponent,
         viewBox,
         setViewBox,
         screenDisplayWidth,
+        calculateViewBox
     ]);
 
-    window.addEventListener('resize', () => setTimeout(calculateViewBox, 50));
+    useEffect(() => {
+        window.addEventListener("resize", calculateViewBox);
+        return () => {
+            window.removeEventListener("resize", calculateViewBox);
+        }
+    }, [
+        svgComponent,
+        viewBox,
+        setViewBox,
+        screenDisplayWidth,
+        calculateViewBox,
+    ]);
+    
 
     return (
         <svg

@@ -9,6 +9,7 @@ import {
     useState,
     useEffect,
     useRef,
+    useCallback,
 } from 'react';
 
 
@@ -140,13 +141,27 @@ function NavBarTab({
 
 export default function NavBar() {
     const [ changeNavBarBg ,setChangeNavBarBg ] = useState("false");
-    window.addEventListener('scroll', () => {
+
+    const handleNavBarBgChange = useCallback(() => {
         if (window.scrollY > 300) {
             setChangeNavBarBg("true");
         } else {
             setChangeNavBarBg("false");
         }
-    });
+    },[
+        setChangeNavBarBg,
+    ]);
+
+    useEffect( () => {
+        window.addEventListener("scroll", handleNavBarBgChange);
+        return () => {
+            window.removeEventListener("scroll", handleNavBarBgChange);
+        }
+    }, [
+        changeNavBarBg,
+        setChangeNavBarBg,
+        handleNavBarBgChange,
+    ])
 
     // swap out the entire CSS className based on the screen size
     // necessary to deploy different animation action based on the 
@@ -191,7 +206,7 @@ export default function NavBar() {
         }
     }
 
-    const changeNavBarClass = () => {
+    const changeNavBarClass = useCallback(() => {
         if (window.innerWidth < smallScreenBreakPointSize) {
             setCssClassName(smallScreenCssClassName);
             setToggleNavBarButtonDisplay(false);
@@ -199,9 +214,20 @@ export default function NavBar() {
             setCssClassName(largeScreenCssClassName);
             setToggleNavBarButtonDisplay(true);
         }
-    };
+    }, [
+        setCssClassName,
+        setToggleNavBarButtonDisplay,
+        smallScreenBreakPointSize,
+    ]);
 
-    window.addEventListener('resize', changeNavBarClass);
+    useEffect(() => {
+        window.addEventListener("resize", changeNavBarClass);
+        return () => {
+            window.removeEventListener("resize", changeNavBarClass);
+        }
+    },[
+        changeNavBarClass,
+    ]);
 
     useEffect(changeNavBarClass, [
         setCssClassName,
@@ -210,6 +236,7 @@ export default function NavBar() {
         navBar,
         smallScreenBreakPointSize,
         setToggleNavBarButtonDisplay,
+        changeNavBarClass,
     ]);
 
     useEffect(() => {

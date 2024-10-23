@@ -7,6 +7,7 @@ import {
     Box,
 } from '@radix-ui/themes';
 import {
+    useCallback,
     useEffect,
     useRef,
     useState,
@@ -129,7 +130,8 @@ export default function Certificates(){
 
     const [animationTriggered, setAnimationTriggered] = useState<boolean>(false);
     const certificateContainer = useRef<HTMLDivElement>(null);
-    window.addEventListener("scroll", ()=>{
+
+    const handleCertificateAnimationTrigger = useCallback(()=>{
         const certificatesContainerXTopLocation = certificateContainer.current?.getBoundingClientRect().top;
         const certificatesContainerXBottomLocation = certificateContainer.current?.getBoundingClientRect().bottom;
         if (certificatesContainerXTopLocation === undefined ||
@@ -155,7 +157,21 @@ export default function Certificates(){
             // console.log("reset animation triggered", animationTriggered)
             setAnimationTriggered(false);
         }
-    });
+    }, [
+        animationTriggered,
+        setAnimationTriggered,
+    ]);
+
+    useEffect( () => {
+        window.addEventListener("scroll", handleCertificateAnimationTrigger);
+        return () => {
+            window.removeEventListener("scroll", handleCertificateAnimationTrigger);
+        }
+    }, [
+        handleCertificateAnimationTrigger,
+        animationTriggered,
+    ])
+    
 
     return(
         <Container

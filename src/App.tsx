@@ -1,5 +1,6 @@
 import { 
   StrictMode,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -58,19 +59,28 @@ function Main() {
   const [appOverflow, setAppOverflow] = useState<boolean>(false);
   const [triggerOverlay, setTriggerOverlay] = useState<boolean>(true);
 
-  const handleSetMainScreenSize = () => {
+  const handleSetMainScreenSize = useCallback(() => {
     if (main.current === null) return;
     const mainWidth = main.current.getBoundingClientRect().width;
     setScreenDisplayWidth(mainWidth);
-  };
+  }, []);
 
   useEffect(handleSetMainScreenSize, [
     setScreenDisplayWidth,
     screenDisplayWidth,
     appOverflow,
+    handleSetMainScreenSize,
   ]);
 
-  window.addEventListener('resize', handleSetMainScreenSize);
+  useEffect( () => {
+    window.addEventListener('resize', handleSetMainScreenSize);
+    return () => {
+      window.removeEventListener('resize', handleSetMainScreenSize);
+    };
+  }, [
+    handleSetMainScreenSize,
+  ]);
+  
 
   setTimeout(setAppOverflow, 2000, true);
 

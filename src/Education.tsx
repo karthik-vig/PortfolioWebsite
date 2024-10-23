@@ -8,6 +8,8 @@ import {
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
 import {
+    useCallback,
+    useEffect,
     useLayoutEffect,
     useRef,
     useState,
@@ -263,7 +265,8 @@ export default function Education() {
     const educationContainer = useRef<HTMLDivElement>(null);
     const mainFlexBox = useRef<HTMLDivElement>(null);
     const [contentViewStatus, setContentViewStatus] = useState("false");
-    window.addEventListener('scroll', () => { 
+    
+    const handleContentViewStatus = useCallback( () => { 
         // get the bottom height and if it is less than the height of 
         // the window, meaning the element is fully visible, then 
         // go ahead with the animation
@@ -293,7 +296,22 @@ export default function Education() {
         ){
             setContentViewStatus("false");
         }
-    })
+    }, [
+        contentViewStatus,
+        setContentViewStatus,
+    ]);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleContentViewStatus);
+        return () => {
+            window.removeEventListener("scroll", handleContentViewStatus);
+        }
+    }, [
+        setContentViewStatus,
+        contentViewStatus,
+        handleContentViewStatus,
+    ]);
+    
 
     return (
         <Container
