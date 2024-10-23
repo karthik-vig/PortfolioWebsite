@@ -46,7 +46,7 @@ function CourseInformation({
                 weight="medium"
                 size={textSize}
                 className="
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 {children.duration}
@@ -84,7 +84,7 @@ function CourseInformation({
                 width="auto"
                 dir="ltr"
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 <Heading 
@@ -250,7 +250,7 @@ function EducationVerticalLine({
                 data-[content-view-status=true]:animate-inctimelineheight \
                 data-[content-view-status=true]:h-[100%] \
                 data-[content-view-status=false]:h-0 \
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-component \
                 "
             >
             </div>
@@ -307,7 +307,7 @@ export default function Education() {
                 mt="100px"
                 align="left"
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 🎓 Education

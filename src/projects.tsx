@@ -133,6 +133,7 @@ function generateMouseHandlers(
     setBoxShadow: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
 ) {
     const rotateOnMouseMovement = (event: React.MouseEvent) => {
+        if (window.innerWidth < 500) return;
         const pointerPosition = {
             x: event.clientX,
             y: event.clientY,
@@ -302,7 +303,7 @@ export default function Projects() {
                 mt="100px"
                 align="left"
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-component \
                 "
             >
                 📦 Projects

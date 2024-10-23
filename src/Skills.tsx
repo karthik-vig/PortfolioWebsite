@@ -67,7 +67,7 @@ function SkillSection({children, title}: {children: string[], title: string}) {
                     md:"5",
                 }}
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 {title}
@@ -106,7 +106,7 @@ function SkillSection({children, title}: {children: string[], title: string}) {
                             >   
                                 <Text
                                     className="\
-                                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                                    highlight-text \
                                     "
                                 >
                                     {`⭐️ ${element}`}
@@ -132,7 +132,7 @@ export default function Skills() {
                 mt="100px"
                 align="left"
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 💪 Skills

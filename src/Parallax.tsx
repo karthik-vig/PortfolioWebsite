@@ -92,13 +92,35 @@ export default function Parallax({
     screenDisplayWidth: number | undefined;
     parallaxLayers: parallaxLayersTemplate[];
 }) {
+    // dynamically set the the viewbox with hard coded
+    // dimensions
+    const svgComponent = useRef<SVGSVGElement>(null);
+    const [ viewBox, setViewBox ] = useState<string>("0 0 100 100");
+
+    const calculateViewBox = () => {
+        if (svgComponent.current === null) return;
+        const {
+            height: svgComponentHeight,
+        } = svgComponent.current.getBoundingClientRect();
+        setViewBox(`0 0 ${screenDisplayWidth} ${svgComponentHeight}`);
+    };
+
+    useLayoutEffect(calculateViewBox, [
+        svgComponent,
+        viewBox,
+        setViewBox,
+        screenDisplayWidth,
+    ]);
+
+    window.addEventListener('resize', () => setTimeout(calculateViewBox, 50));
 
     return (
         <svg
+            ref={svgComponent}
             className="\
             fixed z-10 top-0 left-0 \
             "
-            viewBox="0 0 1475 945"
+            viewBox={viewBox}
             preserveAspectRatio="xMaxYMax slice"
             // preserveAspectRatio="none"
             height="100vh"

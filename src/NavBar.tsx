@@ -271,7 +271,7 @@ export default function NavBar() {
                 alt="personal portfolio logo"
                 className="\
                 max-[520px]:mt-5 \
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-component \
                 "
             />
             {

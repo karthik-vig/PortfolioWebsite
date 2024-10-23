@@ -29,7 +29,7 @@ function PublicationInfo({
                 <Heading
                     className="\
                     mb-3 \
-                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                    highlight-text \
                     "
                     size={{
                         initial: "3",
@@ -50,7 +50,7 @@ function PublicationInfo({
                 </Heading>
                 <Text
                     className="\
-                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                    highlight-text \
                     "
                 >
                     {`${children.publisher} (${children.date})`}
@@ -72,7 +72,7 @@ export default function Publications() {
                 mt="100px"
                 align="left"
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 📜 Publications

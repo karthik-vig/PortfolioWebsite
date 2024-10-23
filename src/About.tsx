@@ -59,7 +59,7 @@ function ContactInfo({
             justify="center"
             align="center"
             className="\
-            drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+            highlight-component \
             "
         >
             <Link
@@ -142,7 +142,7 @@ export default function About() {
                     }}
                     className="\
                     font-pacifico \
-                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                    highlight-text \
                     "
                 >
                     🎯 About Me 🎯
@@ -159,7 +159,7 @@ export default function About() {
                     className="\
                     mx-10 \
                     text-justify \
-                    drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                    highlight-text \
                     "
                 >
                     {("profile" in Data.about[0])? Data.about[0].profile as string: ""}

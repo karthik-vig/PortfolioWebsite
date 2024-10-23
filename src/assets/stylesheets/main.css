@@ -16,6 +16,20 @@
     src: url("../fonts/Pacifico-Regular.ttf") format("truetype");
 }
 
+/*custom class to highlight the text against the 
+  background
+*/
+.highlight-text {
+    text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+}
+
+/*custom class to highlight the components against the
+  background
+*/
+.highlight-component {
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.7));
+}
+
 /*
 * { 
     outline: 1px solid red !Important;

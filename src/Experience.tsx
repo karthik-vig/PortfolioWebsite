@@ -140,7 +140,7 @@ export default function Experience() {
                 mt="100px"
                 align="left"
                 className="\
-                drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)] \
+                highlight-text \
                 "
             >
                 💼 Experience
