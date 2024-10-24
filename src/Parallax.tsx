@@ -13,11 +13,10 @@ export const svgID: string = "#parallax";
 
 export interface parallaxLayersTemplate {
     src: string;
-    // both start and end are between 0 and 1
-    // which denotes the percentage ratio of the 
-    // vertical position of the background image
-    // ex: start=0.3 and end =0.7, then we move from
-    // 30 percent to 70 percent
+    // both start and end are pixel values 
+    // can be positive or negative. We go from the start
+    // to the end value from the top of the 
+    // main window scroll to the the end of it
     movementY: {
         start: number;
         end: number;
@@ -39,7 +38,7 @@ function ParallayLayer({
     screenDisplayWidth: number | undefined;
 }) {
 
-    const svgLayer = useRef<SVGImageElement>(null);
+    const svgLayer = useRef<HTMLImageElement>(null);
 
     const [ svgLayerYPosition, setSvgLayerYPosition ] = useState<number>(parallaxLayer.movementY.start);
     const [ svgLayerXPosition, setSvgLayerXPosition ] = useState<number>(0);
@@ -48,12 +47,9 @@ function ParallayLayer({
         if (svgLayer.current === null) return;
         const domScrollHeight = document.documentElement.scrollHeight;
         const currentDomScrollYPosition = document.documentElement.scrollTop;
-        // console.log(domScrollHeight, currentDomScrollYPosition, window.innerHeight);
         const scrolledRatio = (currentDomScrollYPosition) / (domScrollHeight - window.innerHeight);
-        // console.log(scrolledRatio);
         const movementYRange = parallaxLayer.movementY.end - parallaxLayer.movementY.start;
         const currentImageYPosition = parallaxLayer.movementY.start + movementYRange * scrolledRatio;
-        // console.log(currentImageYPosition);
         setSvgLayerYPosition(currentImageYPosition);
     }, [
         setSvgLayerYPosition,
@@ -72,10 +68,8 @@ function ParallayLayer({
     
 
     useLayoutEffect(() => {
-        // console.log("svg image layer use layout effect called");
         if (svgLayer.current === null) return;
         const { width: svgLayerWidth, } = svgLayer.current.getBoundingClientRect();
-        // console.log(screenDisplayWidth? svgLayerWidth / screenDisplayWidth: null);
         setSvgLayerXPosition( screenDisplayWidth? (screenDisplayWidth - svgLayerWidth) / 2 : 0);
     }, [
         screenDisplayWidth,
@@ -84,19 +78,20 @@ function ParallayLayer({
     ]);
 
     return (
-        <image
+        <img 
             ref={svgLayer}
-            href={parallaxLayer.src}
-            x={`${svgLayerXPosition}%`}
-            y={`${svgLayerYPosition * 100}%`}
-            width={`${parallaxLayer.dimension.width}%`}
-            height={`${parallaxLayer.dimension.height}%`}
-            className="absolute top-0 left-0"
+            src={parallaxLayer.src}
+            alt="test svg image"
+            className="\
+            absolute \
+            "
             style={{
+                height: "100vh",
+                width: screenDisplayWidth + "px",
+                objectFit: "cover",
                 zIndex: String(zIndex),
-                padding: "0",
-                margin: "0",
-                border: "0",
+                top: `${svgLayerYPosition}px`,
+                left: `${svgLayerXPosition}px`,
             }}
         />
     );
@@ -109,52 +104,15 @@ export default function Parallax({
     screenDisplayWidth: number | undefined;
     parallaxLayers: parallaxLayersTemplate[];
 }) {
-    // dynamically set the the viewbox with hard coded
-    // dimensions
-    const svgComponent = useRef<SVGSVGElement>(null);
-    const [ viewBox, setViewBox ] = useState<string>("0 0 100 100");
-
-    const calculateViewBox = useCallback(() => {
-        if (svgComponent.current === null) return;
-        const {
-            height: svgComponentHeight,
-        } = svgComponent.current.getBoundingClientRect();
-        setViewBox(`0 0 ${screenDisplayWidth} ${svgComponentHeight}`);
-    },[
-        svgComponent,
-        setViewBox,
-        screenDisplayWidth,
-    ]);
-
-    useLayoutEffect(calculateViewBox, [
-        calculateViewBox
-    ]);
-
-    useEffect(() => {
-        window.addEventListener("resize", calculateViewBox);
-        return () => {
-            window.removeEventListener("resize", calculateViewBox);
-        }
-    }, [
-        calculateViewBox,
-    ]);
-    
-
+  
     return (
-        <svg
-            ref={svgComponent}
+        <div
             className="\
             fixed z-10 top-0 left-0 \
             "
-            viewBox={viewBox}
-            preserveAspectRatio="xMaxYMax slice"
-            // preserveAspectRatio="none"
-            height="100vh"
-            width={screenDisplayWidth+"px"}
             style={{
-                padding: "0",
-                margin: "0",
-                border: "0",
+            width: screenDisplayWidth + "px",
+            height:"100vh",
             }}
         >
             {
@@ -169,6 +127,6 @@ export default function Parallax({
                     );
                 })
             }
-        </svg>
+        </div>
     );
 }

@@ -103,7 +103,7 @@ function Main() {
     {
       src: "./src/assets/images/parallaxLayers/bg_layer.svg",
       movementY: {
-        start: -0.05,
+        start: -25,
         end: 0,
       },
       dimension: {
@@ -114,7 +114,7 @@ function Main() {
     {
       src: "./src/assets/images/parallaxLayers/middle_layer.svg",
       movementY: {
-        start: 0.1,
+        start: 50,
         end: 0,
       },
       dimension: {
@@ -125,7 +125,7 @@ function Main() {
     {
       src: "./src/assets/images/parallaxLayers/fg_layer.svg",
       movementY: {
-        start: 0.2,
+        start: 100,
         end: 0,
       },
       dimension: {
