@@ -2,6 +2,7 @@ import {
   StrictMode,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
@@ -21,6 +22,102 @@ import Overlay from './Overlay'
 import Parallax, {
   parallaxLayersTemplate,
 } from './Parallax'
+
+
+const horizonalParallaxLayers: parallaxLayersTemplate[] = [
+  {
+    src: "./src/assets/images/parallaxLayers/horizontalLayers/white_base_bg.svg",
+    movementY: {
+      start: 0,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+  {
+    src: "./src/assets/images/parallaxLayers/horizontalLayers/bg_layer.svg",
+    movementY: {
+      start: -25,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+  {
+    src: "./src/assets/images/parallaxLayers/horizontalLayers/middle_layer.svg",
+    movementY: {
+      start: 50,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+  {
+    src: "./src/assets/images/parallaxLayers/horizontalLayers/fg_layer.svg",
+    movementY: {
+      start: 100,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+];
+
+
+const verticalParallaxLayers: parallaxLayersTemplate[] = [
+  {
+    src: "./src/assets/images/parallaxLayers/verticalLayers/white_base_bg.svg",
+    movementY: {
+      start: 0,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+  {
+    src: "./src/assets/images/parallaxLayers/verticalLayers/bg_layer.svg",
+    movementY: {
+      start: -25,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+  {
+    src: "./src/assets/images/parallaxLayers/verticalLayers/middle_layer.svg",
+    movementY: {
+      start: 50,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+  {
+    src: "./src/assets/images/parallaxLayers/verticalLayers/fg_layer.svg",
+    movementY: {
+      start: 100,
+      end: 0,
+    },
+    dimension: {
+      height: 100,
+      width: 100,
+    }
+  },
+];
 
 
 function App({
@@ -58,6 +155,7 @@ function Main() {
   const [screenDisplayWidth, setScreenDisplayWidth] = useState<number | undefined>(0);
   const [appOverflow, setAppOverflow] = useState<boolean>(false);
   const [triggerOverlay, setTriggerOverlay] = useState<boolean>(true);
+  const [parallaxLayer, setParallaxLayer] = useState<parallaxLayersTemplate[]>(horizonalParallaxLayers);
 
   const handleSetMainScreenSize = useCallback(() => {
     if (main.current === null) return;
@@ -68,19 +166,37 @@ function Main() {
     setScreenDisplayWidth,
   ]);
 
+  const handleSelectParallaxLayerType = useCallback(() => {
+    if (window.innerWidth > 1024 ) {
+      setParallaxLayer(horizonalParallaxLayers);
+    } else {
+      setParallaxLayer(verticalParallaxLayers);
+    }
+
+  }, [
+    setParallaxLayer,
+  ]);
+
   useEffect(handleSetMainScreenSize, [
     screenDisplayWidth,
     appOverflow,
     handleSetMainScreenSize,
   ]);
 
+  useLayoutEffect(handleSelectParallaxLayerType, [
+    handleSelectParallaxLayerType,
+  ]);
+
   useEffect( () => {
-    window.addEventListener('resize', handleSetMainScreenSize);
+    window.addEventListener("resize", handleSetMainScreenSize);
+    window.addEventListener("resize", handleSelectParallaxLayerType);
     return () => {
-      window.removeEventListener('resize', handleSetMainScreenSize);
+      window.removeEventListener("resize", handleSetMainScreenSize);
+      window.removeEventListener("resize", handleSelectParallaxLayerType);
     };
   }, [
     handleSetMainScreenSize,
+    handleSelectParallaxLayerType,
   ]);
   
 
@@ -88,52 +204,6 @@ function Main() {
 
   setTimeout(setTriggerOverlay, 2000, false);
 
-  const parallaxLayers: parallaxLayersTemplate[] = [
-    {
-      src: "./src/assets/images/parallaxLayers/white_base_bg.svg",
-      movementY: {
-        start: 0,
-        end: 0,
-      },
-      dimension: {
-        height: 100,
-        width: 100,
-      }
-    },
-    {
-      src: "./src/assets/images/parallaxLayers/bg_layer.svg",
-      movementY: {
-        start: -25,
-        end: 0,
-      },
-      dimension: {
-        height: 100,
-        width: 100,
-      }
-    },
-    {
-      src: "./src/assets/images/parallaxLayers/middle_layer.svg",
-      movementY: {
-        start: 50,
-        end: 0,
-      },
-      dimension: {
-        height: 100,
-        width: 100,
-      }
-    },
-    {
-      src: "./src/assets/images/parallaxLayers/fg_layer.svg",
-      movementY: {
-        start: 100,
-        end: 0,
-      },
-      dimension: {
-        height: 100,
-        width: 100,
-      }
-    },
-  ];
 
   return (
     <StrictMode>
@@ -157,7 +227,7 @@ function Main() {
       >
         <Parallax 
           screenDisplayWidth={screenDisplayWidth}
-          parallaxLayers={parallaxLayers}
+          parallaxLayers={parallaxLayer}
         />
         <Overlay 
           screenDisplayWidth={screenDisplayWidth}
