@@ -129,6 +129,7 @@ function NavBarTab({
                 hover:text-orange-400 \
                 hover:animate- \
                 text-slate-200 \
+                highlight-text \
                 "
                 // hover:bg-black/30 \
                 onClick={() => setShowNavBar("false")}
