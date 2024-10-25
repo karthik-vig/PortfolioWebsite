@@ -177,7 +177,6 @@ function Main() {
   ]);
 
   useEffect(handleSetMainScreenSize, [
-    screenDisplayWidth,
     appOverflow,
     handleSetMainScreenSize,
   ]);
