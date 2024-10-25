@@ -49,6 +49,7 @@ function CourseInformation({
                 size={textSize}
                 className="
                 highlight-text \
+                text-orange-400 \
                 "
             >
                 {children.duration}
@@ -73,6 +74,13 @@ function CourseInformation({
             }}
             width="100%"
             justify="between"
+            className="\
+            bg-black/30 \
+            backdrop-blur-md \
+            p-2 \
+            border-0 \
+            rounded-md \
+            "
         >
             { placeOnTop? durationComp: <></> }
             <Flex

@@ -197,7 +197,12 @@ export default function Certificates(){
                 gap="5"
                 className="\
                 ml-10 \
-                mr-10 \ 
+                mr-10 \
+              bg-black/30 \
+                backdrop-blur-md \
+                p-2 \
+                border-0 \
+                rounded-md \
                 "
                 justify="center"
             >

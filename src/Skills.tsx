@@ -93,6 +93,11 @@ function SkillSection({children, title}: {children: string[], title: string}) {
             data-[state=closed]:animate-decheight \
             data-[state=open]:animate-incheight \
             data-[state=closed]:h-0 \
+            bg-black/30 \
+            backdrop-blur-md \
+            border-0 \
+            rounded-md \
+            w-auto \
             "
         >
             <ul 
