@@ -110,7 +110,7 @@ function CertificateInfo({
                     src={`./src/assets/images/certificates/${children.imageName}`}
                     className="\
                     h-32 \
-                    w-32 \
+                    w-auto \
                     border-0 \
                     rounded-lg \
                     "
