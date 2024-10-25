@@ -1,6 +1,3 @@
-// import {
-//     Flex,
-// } from '@radix-ui/themes';
 import {
     useCallback,
     useEffect,
@@ -43,6 +40,8 @@ function ParallayLayer({
     const [ svgLayerYPosition, setSvgLayerYPosition ] = useState<number>(parallaxLayer.movementY.start);
     const [ svgLayerXPosition, setSvgLayerXPosition ] = useState<number>(0);
 
+    // actual functional implementation to handle the
+	// Y position
     const handleSetSVGLayerYPosition = useCallback(() => {
         if (svgLayer.current === null) return;
         const domScrollHeight = document.documentElement.scrollHeight;
@@ -57,6 +56,7 @@ function ParallayLayer({
         parallaxLayer.movementY.end,
     ]);
 
+    // change the Y position on scroll
     useEffect(() => {
         window.addEventListener("scroll", handleSetSVGLayerYPosition);
         return () => {
@@ -66,7 +66,8 @@ function ParallayLayer({
         handleSetSVGLayerYPosition,
     ]);
     
-
+    // calculate the X position and center the image on the
+	// screen
     useLayoutEffect(() => {
         if (svgLayer.current === null) return;
         const { width: svgLayerWidth, } = svgLayer.current.getBoundingClientRect();
