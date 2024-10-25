@@ -48,11 +48,14 @@ function CertificateInfo({
             data-animationstate={startAnimation}
             className="\
             border-1 \
-            rounded-md \
-            p-4 \
             data-[animationstate=true]:animate-popIntoExistence \
             data-[animationstate=true]:opacity-1 \
             data-[animationstate=false]:opacity-0 \
+            bg-black/30 \
+            backdrop-blur-md \
+            p-3 \
+            border-0 \
+            rounded-md \
             "
         >
             <Flex
@@ -198,11 +201,6 @@ export default function Certificates(){
                 className="\
                 ml-10 \
                 mr-10 \
-              bg-black/30 \
-                backdrop-blur-md \
-                p-2 \
-                border-0 \
-                rounded-md \
                 "
                 justify="center"
             >
