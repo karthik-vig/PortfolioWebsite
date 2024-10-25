@@ -133,7 +133,6 @@ function App({
       overflowY={appOverflow? "auto": "hidden"}
       maxWidth="100vw"
       className="\
-      relative z-20 top-0 left-0 \
       pb-96 \
       "
       height={appOverflow? "auto": "100vh"}
@@ -228,13 +227,14 @@ function Main() {
         <Parallax 
           screenDisplayWidth={screenDisplayWidth}
           parallaxLayers={parallaxLayer}
-        />
+        >
+          <App
+            appOverflow={appOverflow}
+          />
+        </Parallax>
         <Overlay 
           screenDisplayWidth={screenDisplayWidth}
           triggerOverlay={triggerOverlay}
-        />
-        <App 
-          appOverflow={appOverflow}
         />
     </Theme>    
   </StrictMode>

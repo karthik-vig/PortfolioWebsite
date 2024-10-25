@@ -100,33 +100,44 @@ function ParallayLayer({
 export default function Parallax({
     screenDisplayWidth,
     parallaxLayers,
+    children,
 }:{
     screenDisplayWidth: number | undefined;
     parallaxLayers: parallaxLayersTemplate[];
+    children: JSX.Element;
 }) {
   
     return (
-        <div
-            className="\
-            fixed z-10 top-0 left-0 \
-            "
-            style={{
-            width: screenDisplayWidth + "px",
-            height:"100vh",
-            }}
-        >
-            {
-                parallaxLayers.map((element: parallaxLayersTemplate, idx: number) => {
-                    return (
-                        <ParallayLayer
-                            key={idx}
-                            parallaxLayer={element}
-                            zIndex={idx + 1}
-                            screenDisplayWidth={screenDisplayWidth}
-                        />
-                    );
-                })
-            }
+        <div>
+            <div
+                className="\
+                fixed z-10 top-0 left-0 \
+                "
+                style={{
+                width: screenDisplayWidth + "px",
+                height:"100vh",
+                }}
+            >
+                {
+                    parallaxLayers.map((element: parallaxLayersTemplate, idx: number) => {
+                        return (
+                            <ParallayLayer
+                                key={idx}
+                                parallaxLayer={element}
+                                zIndex={idx + 1}
+                                screenDisplayWidth={screenDisplayWidth}
+                            />
+                        );
+                    })
+                }
+            </div>
+            <div
+                className="\
+                relative z-20 top-0 left-0 \
+                "
+            >
+                {children}
+            </div>
         </div>
     );
 }
