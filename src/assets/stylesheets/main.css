@@ -20,7 +20,7 @@
   background
 */
 .highlight-text {
-    text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8);
 }
 
 /*custom class to highlight the components against the
