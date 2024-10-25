@@ -231,7 +231,7 @@ function ProjectInfoCard({
                 gap="2"
             >
             <img 
-                src={`/src/assets/images/${imageName}`} 
+                src={`/src/assets/images/projects/${imageName}`} 
                 alt={imageName}
                 className="\
                 border-0 \

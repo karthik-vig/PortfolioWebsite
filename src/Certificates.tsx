@@ -79,7 +79,10 @@ function CertificateInfo({
                         <Link
                             href={children.link}
                             target="_blank"
-                            color="orange"
+                            className="\
+                            text-orange-400 \
+                            hover:text-orange-500 \
+                            "
                         >
                             {children.certificateTitle}
                         </Link>
@@ -101,7 +104,7 @@ function CertificateInfo({
                     </Text>
                 </Flex>
                 <img 
-                    src={`./src/assets/images/${children.imageName}`}
+                    src={`./src/assets/images/certificates/${children.imageName}`}
                     className="\
                     h-32 \
                     w-32 \

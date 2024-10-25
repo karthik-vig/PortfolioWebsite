@@ -42,7 +42,8 @@ function PublicationInfo({
                         href={children.link}
                         target="_blank"
                         className="\
-                        text-slate-100 \
+                        text-indigo-500 \
+                        hover:text-indigo-700 \
                         "
                     >  
                         {children.title}

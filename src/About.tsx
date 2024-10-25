@@ -44,8 +44,10 @@ function ContactInfo({
             sm: "3",
             md: "6",
         },
-        color: "red",
-        className: ""
+        className: "\
+        text-red-400 \
+        hover:text-red-500 \
+        "
     };
     return (
         <Flex
@@ -68,6 +70,7 @@ function ContactInfo({
                 weight={linkRenderSetting.weight}
                 size={linkRenderSetting.size}
                 color={linkRenderSetting.color}
+                className={linkRenderSetting.className}
             >
                 <SVGIcons 
                     svgName='mail'
@@ -80,6 +83,7 @@ function ContactInfo({
                 weight={linkRenderSetting.weight}
                 size={linkRenderSetting.size}
                 color={linkRenderSetting.color}
+                className={linkRenderSetting.className}
             >
                 <SVGIcons 
                     svgName='github'
@@ -92,6 +96,7 @@ function ContactInfo({
                 weight={linkRenderSetting.weight}
                 size={linkRenderSetting.size}
                 color={linkRenderSetting.color}
+                className={linkRenderSetting.className}
             >
                 <SVGIcons 
                     svgName='linkedin'
