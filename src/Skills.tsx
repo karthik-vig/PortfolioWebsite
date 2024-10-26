@@ -130,6 +130,7 @@ export default function Skills() {
     return (
         <Container
             id="skills"
+            mr="10px"
         >
             <Heading
                 as="h3"
