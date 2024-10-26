@@ -111,6 +111,7 @@ function CertificateInfo({
                     className="\
                     h-32 \
                     w-auto \
+                    max-w-[50%] \
                     border-0 \
                     rounded-lg \
                     "
