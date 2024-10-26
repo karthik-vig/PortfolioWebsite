@@ -107,7 +107,7 @@ function CertificateInfo({
                     </Text>
                 </Flex>
                 <img 
-                    src={`./src/assets/images/certificates/${children.imageName}`}
+                    src={`./images/certificates/${children.imageName}`}
                     className="\
                     h-32 \
                     w-auto \

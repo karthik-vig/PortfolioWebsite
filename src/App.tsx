@@ -26,7 +26,7 @@ import Parallax, {
 
 const horizonalParallaxLayers: parallaxLayersTemplate[] = [
   {
-    src: "./src/assets/images/parallaxLayers/horizontalLayers/white_base_bg.svg",
+    src: "./images/parallaxLayers/horizontalLayers/white_base_bg.svg",
     movementY: {
       start: 0,
       end: 0,
@@ -37,7 +37,7 @@ const horizonalParallaxLayers: parallaxLayersTemplate[] = [
     }
   },
   {
-    src: "./src/assets/images/parallaxLayers/horizontalLayers/bg_layer.svg",
+    src: "./images/parallaxLayers/horizontalLayers/bg_layer.svg",
     movementY: {
       start: -25,
       end: 0,
@@ -48,7 +48,7 @@ const horizonalParallaxLayers: parallaxLayersTemplate[] = [
     }
   },
   {
-    src: "./src/assets/images/parallaxLayers/horizontalLayers/middle_layer.svg",
+    src: "./images/parallaxLayers/horizontalLayers/middle_layer.svg",
     movementY: {
       start: 50,
       end: 0,
@@ -59,7 +59,7 @@ const horizonalParallaxLayers: parallaxLayersTemplate[] = [
     }
   },
   {
-    src: "./src/assets/images/parallaxLayers/horizontalLayers/fg_layer.svg",
+    src: "./images/parallaxLayers/horizontalLayers/fg_layer.svg",
     movementY: {
       start: 100,
       end: 0,
@@ -74,7 +74,7 @@ const horizonalParallaxLayers: parallaxLayersTemplate[] = [
 
 const verticalParallaxLayers: parallaxLayersTemplate[] = [
   {
-    src: "./src/assets/images/parallaxLayers/verticalLayers/white_base_bg.svg",
+    src: "./images/parallaxLayers/verticalLayers/white_base_bg.svg",
     movementY: {
       start: 0,
       end: 0,
@@ -85,7 +85,7 @@ const verticalParallaxLayers: parallaxLayersTemplate[] = [
     }
   },
   {
-    src: "./src/assets/images/parallaxLayers/verticalLayers/bg_layer.svg",
+    src: "./images/parallaxLayers/verticalLayers/bg_layer.svg",
     movementY: {
       start: -25,
       end: 0,
@@ -96,7 +96,7 @@ const verticalParallaxLayers: parallaxLayersTemplate[] = [
     }
   },
   {
-    src: "./src/assets/images/parallaxLayers/verticalLayers/middle_layer.svg",
+    src: "./images/parallaxLayers/verticalLayers/middle_layer.svg",
     movementY: {
       start: 50,
       end: 0,
@@ -107,7 +107,7 @@ const verticalParallaxLayers: parallaxLayersTemplate[] = [
     }
   },
   {
-    src: "./src/assets/images/parallaxLayers/verticalLayers/fg_layer.svg",
+    src: "./images/parallaxLayers/verticalLayers/fg_layer.svg",
     movementY: {
       start: 100,
       end: 0,

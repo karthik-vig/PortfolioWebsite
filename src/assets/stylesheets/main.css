@@ -13,7 +13,7 @@
     font-family: 'Pacifico';
     font-style: normal;
     font-weight: normal;
-    src: url("../fonts/Pacifico-Regular.ttf") format("truetype");
+    src: url("./fonts/Pacifico-Regular.ttf") format("truetype");
 }
 
 /*custom class to highlight the text against the 

@@ -41,7 +41,7 @@ export default function Overlay({
                 "
             >
                 <img 
-                    src="./src/assets/images/personal_portfolio_icon_bg.svg"
+                    src="./images/personal_portfolio_icon_bg.svg"
                     alt="logo background"
                     className="\
                     absolute \
@@ -52,7 +52,7 @@ export default function Overlay({
                     "
                 />
                 <img 
-                    src="./src/assets/images/personal_portfolio_icon_fg.svg"
+                    src="./images/personal_portfolio_icon_fg.svg"
                     alt="logo foreground"
                     className="\
                     absolute \
@@ -64,7 +64,7 @@ export default function Overlay({
                 />
             </Box>
             <img 
-                src="./src/assets/images/website enter text.svg"
+                src="./images/website enter text.svg"
                 alt="introductary hello text"
                 className="\
                 h-auto \

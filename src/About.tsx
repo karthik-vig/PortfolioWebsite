@@ -23,7 +23,7 @@ function SVGIcons({
 }) {
     return (
         <img 
-            src={`./src/assets/images/${svgName}.svg`}
+            src={`./images/${svgName}.svg`}
             alt={`${svgName} svg icon`}
             className="inline m-2 h-7 w-7"
         />

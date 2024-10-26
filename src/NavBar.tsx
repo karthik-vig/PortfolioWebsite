@@ -290,7 +290,7 @@ export default function NavBar() {
             <img
                 height="50px"
                 width="50px"
-                src="./src/assets/images/personal_portfolio_icon.svg"
+                src="./images/personal_portfolio_icon.svg"
                 alt="personal portfolio logo"
                 className="\
                 max-[520px]:mt-5 \
