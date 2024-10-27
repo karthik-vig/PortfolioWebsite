@@ -9,9 +9,9 @@ export default {
   theme: {
     extend: {
       ...Animations,
-      fontFamily: {
-        pacifico: ["Pacifico", "sans-serif"]
-      },
+      // fontFamily: {
+      //   pacifico: ["Pacifico", "sans-serif"]
+      // },
     },
   },
   plugins: [],

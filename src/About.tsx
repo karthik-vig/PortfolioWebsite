@@ -136,8 +136,8 @@ export default function About() {
                 "
             >
                 <Heading
-                    mb="10%"
-                    mt="10%"
+                    mb="5%"
+                    mt="5%"
                     align="center"
                     size={{
                         initial: "7",
@@ -146,11 +146,23 @@ export default function About() {
                         md: "9"
                     }}
                     className="\
-                    font-pacifico \
                     highlight-text \
                     "
                 >
-                    🎯 About Me 🎯
+                    🎯 <img 
+                            src="./images/aboutme.svg"
+                            alt="about me title"
+                            className="\
+                            inline \
+                            w-auto \
+                            h-16 \
+                            sm:h-20 \
+                            md:h-20 \
+                            lg:h-32 \
+                            p-0 \
+                            m-0 \
+                            "
+                        /> 🎯
                 </Heading>
                 <Text
                     size={{
