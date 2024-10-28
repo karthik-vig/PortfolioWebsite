@@ -75,14 +75,14 @@ function SkillSection({children, title}: {children: string[], title: string}) {
             <CaretRightIcon
                 data-state={dataState}
                 className="\
-                            h-5 \
-                            w-5 \
-                            mt-1 \
-                            data-[state=open]:animate-rotate90 \
-                            data-[state=closed]:animate-unrotate90 \
-                            data-[state=open]:rotate-90 \
-                            data-[state-closed]:-rotate-90 \
-                            "
+                h-5 \
+                w-5 \
+                mt-1 \
+                data-[state=open]:animate-rotate90 \
+                data-[state=closed]:animate-unrotate90 \
+                data-[state=open]:rotate-90 \
+                data-[state-closed]:-rotate-90 \
+                "
             />
         </Flex>
         <Box
@@ -98,6 +98,7 @@ function SkillSection({children, title}: {children: string[], title: string}) {
             border-0 \
             rounded-md \
             w-auto \
+            px-2 \
             "
         >
             <ul 
