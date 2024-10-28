@@ -13,6 +13,7 @@ import {
 import {
     useState,
     useMemo,
+    useRef,
 } from 'react';
 import Data from './assets/data/data';
 
@@ -23,6 +24,7 @@ function handleCardTiltAction(
     event: React.MouseEvent | React.TouchEvent,
     setRotateBox: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
     setBoxShadow: React.Dispatch<React.SetStateAction<{x: number; y: number;}>>,
+    rotationCutoff: {x: number, y: number} = {x: 0.7, y: 0.7},
 ) {
      // get the dimension and location of the element
      const {
@@ -58,12 +60,8 @@ function handleCardTiltAction(
     // implement a cutoff; so that the user don't
     // feel sick
     let allowRotation = 1;
-    const allowRotationCutoff = {
-        x: 0.3,
-        y: 0.4,
-    };
-    if ( Math.abs(rotationRatio.x) <= allowRotationCutoff.x &&
-    Math.abs(rotationRatio.y) <= allowRotationCutoff.y ) {
+    if ( Math.abs(rotationRatio.x) <= rotationCutoff.x &&
+    Math.abs(rotationRatio.y) <= rotationCutoff.y ) {
         allowRotation = 0;
     }
     const rotateX = Math.abs(maxRotation * rotationRatio.y) * rotationDirection.x * allowRotation;
@@ -84,8 +82,8 @@ function handleCardTiltAction(
         y: (localInputPointerPosition.y >= boxHalfDim.halfHeight )? -1: 1,
     }
     const currentBoxShadow = {
-        x: Math.abs(maxBoxShadow.x * rotationRatio.x) * boxShadowDirection.x,
-        y: Math.abs(maxBoxShadow.y * rotationRatio.y) * boxShadowDirection.y,
+        x: Math.abs(maxBoxShadow.x * rotationRatio.x) * boxShadowDirection.x * allowRotation,
+        y: Math.abs(maxBoxShadow.y * rotationRatio.y) * boxShadowDirection.y * allowRotation,
     }
     setBoxShadow(currentBoxShadow);
 }
@@ -113,10 +111,10 @@ function generateTouchHandlers(
         );
     }
 
-    // no functionality to be triggered on touch
-    const handleTouchStart = () => {};
+    const handleTouchStart = tiltCard;
     
-    const handleTouchMove = tiltCard;
+    // no functionality to be triggered on touch move
+    const handleTouchMove = () => {};
 
     const handleTouchEnd = () => {
         touchPosition.x = 0;
@@ -125,7 +123,7 @@ function generateTouchHandlers(
         setBoxShadow({x: 0, y: 0});
     };
 
-    return [handleTouchStart, handleTouchMove, handleTouchEnd];
+    return {handleTouchStart, handleTouchMove, handleTouchEnd};
 }
 
 // function closure to generate the functions
@@ -144,7 +142,8 @@ function generateMouseHandlers(
             pointerPosition,
             event,
             setRotateBox,
-            setBoxShadow
+            setBoxShadow,
+            { x: 0.3, y: 0.5 }
         );
     };
 
@@ -153,8 +152,10 @@ function generateMouseHandlers(
         setBoxShadow({x: 0, y: 0});
     }
 
-    return [rotateOnMouseMovement, resetRotation];
+    return {rotateOnMouseMovement, resetRotation};
 }
+
+
 
 // the project card component; forms a single 
 // item in a list of project cards
@@ -172,13 +173,16 @@ function ProjectInfoCard({
     children: string;
     }) {
 
+
+    const textScrollArea = useRef<HTMLDivElement>(null);
+
     const [rotateBox, setRotateBox] = useState<{x: number; y: number;}>({x: 0, y: 0});
     const [boxShadow, setBoxShadow] = useState<{x: number; y: number;}>({x: 0, y: 0});
 
-    const [
+    const {
         rotateOnMouseMovement,
         resetRotation,
-    ] = useMemo(() => {
+    } = useMemo(() => {
         return generateMouseHandlers(
             setRotateBox,
             setBoxShadow
@@ -188,11 +192,11 @@ function ProjectInfoCard({
         setBoxShadow,
     ]);
 
-    const [
+    const {
         handleTouchStart,
-        handleTouchMove,
+        // handleTouchMove,
         handleTouchEnd,
-    ] = useMemo(() => {
+    } = useMemo(() => {
         return generateTouchHandlers(
             setRotateBox,
             setBoxShadow
@@ -207,22 +211,25 @@ function ProjectInfoCard({
             className="\
             min-w-72 \
             max-w-72 \
-            max-h-auto \
-            p-0 \
+            max-h-[600px] \
+            sm:max-h-[700px] \
+            md:max-h-[800px] \
+            p- \
             my-5 \
             border-1 \
             rounded-lg \
-            backdrop-blur-3xl \
-            bg-black/25 \
+            backdrop-blur-lg \
+            bg-black/30 \
+            overflow-y-auto \
             "
             onMouseMoveCapture={rotateOnMouseMovement}
             onMouseLeave={resetRotation}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onTouchStartCapture={handleTouchStart}
+            // onTouchMove={handleTouchMove}
+            onTouchEndCapture={handleTouchEnd}
             style={{
                 transform: `perspective(1000px) rotateX(${rotateBox.x}deg) rotateY(${rotateBox.y}deg)`,
-                transition: `transform 50ms ease-out, box-shadow 50ms ease-out`,
+                transition: `transform 100ms ease-out, box-shadow 100ms ease-out`,
                 boxShadow: `${boxShadow.x}px ${boxShadow.y}px 10px rgba(0,0,0,0.3)`,
             }}
         >
@@ -237,7 +244,7 @@ function ProjectInfoCard({
                 border-0 \
                 rounded-t-md \
                 w-auto \
-                h-auto \
+                h-40 \
                 "
             />
             <Box
@@ -276,6 +283,7 @@ function ProjectInfoCard({
                         }
                     </ScrollArea>
                     <ScrollArea
+                        ref={textScrollArea}
                         className="\
                         max-h-40 \
                         "
