@@ -239,7 +239,7 @@ function ProjectInfoCard({
             >
             <img 
                 src={`./images/projects/${imageName}`} 
-                alt={imageName}
+                alt={`project image: ${imageName}`}
                 className="\
                 border-0 \
                 rounded-t-md \

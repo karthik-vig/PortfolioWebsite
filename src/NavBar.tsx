@@ -259,6 +259,7 @@ export default function NavBar() {
         <Button
             hidden={toggleNavBarButtonDisplay}
             onClick={changeShowNavBar}
+            role="expand or hide navigation bar in mobile view"
             className="\
             fixed top-3 left-3 z-50 \
             bg-transparent \

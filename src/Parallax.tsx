@@ -82,7 +82,7 @@ function ParallayLayer({
         <img 
             ref={svgLayer}
             src={parallaxLayer.src}
-            alt="test svg image"
+            alt={`parallax layer: ${zIndex}`}
             className="\
             absolute \
             "

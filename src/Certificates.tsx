@@ -108,6 +108,7 @@ function CertificateInfo({
                 </Flex>
                 <img 
                     src={`./images/certificates/${children.imageName}`}
+                    alt={`Certificate provider logo: ${children.imageName}`}
                     className="\
                     h-32 \
                     w-auto \
