@@ -272,6 +272,17 @@ export default function NavBar() {
             />
         </Button>
         <Flex
+            hidden={showNavBar === "true"? false: true}
+            className="\
+            fixed z-10 \
+            h-[100vh] \
+            w-[100vw] \
+            bg-transparent \
+            "
+            onClick={changeShowNavBar}
+        >
+        </Flex>
+        <Flex
             data-change-nav-bar-bg={changeNavBarBg}
             data-show-nav-bar={showNavBar}
             direction={{
@@ -287,6 +298,7 @@ export default function NavBar() {
             align="center"
             className={cssClassName}
             ref={navBar}
+            wrap="wrap"
         >        
             <img
                 height="50px"
