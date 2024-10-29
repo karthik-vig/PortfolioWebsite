@@ -58,14 +58,24 @@ function CourseInformation({
     );
     let placeOnTop = false;
     let placeOnBottom = true;
-    if (direction === "row-reverse") {
+    if (window.innerWidth < 770 ) {
+        placeOnTop = true;
+        placeOnBottom = false;
+    } else if (direction === "row-reverse") {
         placeOnTop = true;
         placeOnBottom = false;
     }
     // console.log(placeOnTop, placeOnBottom)
     return (
         <Flex
-            direction="row"
+            direction={{
+                initial: "column",
+                xs: "column",
+                sm: "row",
+                md: "row",
+                lg: "row",
+                xl: "row",
+            }}
             gap={{
                 initial: "4",
                 xs: "4",
@@ -74,6 +84,7 @@ function CourseInformation({
             }}
             width="100%"
             justify="between"
+            align="center"
             className="\
             bg-black/30 \
             backdrop-blur-md \
