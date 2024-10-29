@@ -10,13 +10,6 @@
     --timeline-height: 0px;
 }
 
-/* @font-face {
-    font-family: 'Pacifico';
-    font-style: normal;
-    font-weight: normal;
-    src: url("../fonts/Pacifico-Regular.ttf") format("truetype");
-} */
-
 /*custom class to highlight the text against the 
   background
 */
@@ -31,15 +24,36 @@
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.7));
 }
 
+/* customize the scrollbar appearance */
+/* Safari */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(82, 82, 82, 1);
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(232, 112, 27, 1);
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
+}
+
+
+/* chrome and Firefox */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(232, 112, 27, 1) rgba(82, 82, 82, 1);
+    scrollbar-radius: 10px;
+    scrollbar-color-thumb: gray;
+    scrollbar-background: transparent;
+}
+
 /*
 * { 
     outline: 1px solid red !Important;
     outline-offset: -1px;
-}
-*/
-
-/*
-h1, h2, h3, h4, h5, h6, a:first-letter {
-    text-transform: capitalize;
 }
 */
