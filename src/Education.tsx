@@ -190,9 +190,11 @@ function Course({
 }
 
 function EducationSide({
+    forceDrawAllOrNone,
     checkNoDrawCond,
     contentViewStatus,
 }: {
+    forceDrawAllOrNone: "all"| "none" | "default",
     checkNoDrawCond: (cond: number) => boolean,
     contentViewStatus: string,
 }) {
@@ -200,6 +202,7 @@ function EducationSide({
     data-[state=true]:opacity-1 \
     data-[state=false]:opacity-0 \
     ";
+    if (forceDrawAllOrNone === "none") return (<></>);
     if (!checkNoDrawCond(0)) {
         cssClassNames += " data-[state=true]:animate-slideOutLeft"
     } else {
@@ -210,7 +213,7 @@ function EducationSide({
                 direction="column"
                 gap="5"
                 height="auto"
-                width="48%"
+                width={forceDrawAllOrNone === "all"? "95%": "48%"}
                 data-state={contentViewStatus}
                 className={cssClassNames}
                 justify="center"
@@ -220,11 +223,12 @@ function EducationSide({
                         let direction: directionSet = "row";
                         if (idx % 2 !== 0) direction = "row-reverse";
                         // console.log(`idx: ${idx} and direction ${direction}`)
+                        const drawEmpty = forceDrawAllOrNone === "all"? false: checkNoDrawCond(idx);
                         return (
                             <Course
                                 key={idx}
                                 direction={direction}
-                                drawEmpty={checkNoDrawCond(idx)}
+                                drawEmpty={drawEmpty}
                             >
                                 {element as educationalQualification}
                             </Course>
@@ -361,6 +365,7 @@ export default function Education() {
                 justify="center"
             >
                 <EducationSide 
+                    forceDrawAllOrNone={window.innerWidth < 770? "none": "default"}
                     checkNoDrawCond={(cond: number) => cond % 2 !== 0}
                     contentViewStatus={contentViewStatus}
                 />
@@ -369,6 +374,7 @@ export default function Education() {
                     height={mainFlexBox.current?.getBoundingClientRect().height}
                 />
                 <EducationSide
+                    forceDrawAllOrNone={window.innerWidth < 770? "all": "default"}
                     checkNoDrawCond={(cond: number) => cond % 2 === 0}
                     contentViewStatus={contentViewStatus}
                 />
