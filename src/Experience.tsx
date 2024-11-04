@@ -5,12 +5,17 @@ import {
     Flex,
 } from '@radix-ui/themes';
 import {
-    useCallback,
+    // useCallback,
     useEffect,
     useRef,
     useState,
+    useContext,
 } from'react';
+import {
+    useImmer,
+} from 'use-immer';
 import Data from './assets/data/data';
+import GlobalContext from './globalContext';
 
 interface ExperienceInfo {
     companyName: string;
@@ -99,49 +104,37 @@ function ExperienceInstance({
 
 
 export default function Experience() {
-    // const [startAnimation, setStartAnimation] = useImmer<string[]>(Array<string>(Data.experience.length).fill("false"))
-    const [animationTriggered, setAnimationTriggered] = useState<boolean>(false);
+    
+    const [animationTriggered, setAnimationTriggered] = useImmer<boolean>(false);
     const experienceContainer = useRef<HTMLDivElement>(null);
 
-    const  handleExperienceContainerAnimation = useCallback(()=>{
-        const experienceContainerXTopLocation = experienceContainer.current?.getBoundingClientRect().top;
-        const experienceContainerXBottomLocation = experienceContainer.current?.getBoundingClientRect().bottom;
-        if (experienceContainerXTopLocation === undefined ||
-            experienceContainerXBottomLocation === undefined
-        ) return;
-        const windowHeight = window.innerHeight;
-        if ( experienceContainerXBottomLocation <= 1.05 * windowHeight && 
-            animationTriggered === false
-        ) {
-            // console.log("bottom animation triggered", animationTriggered)
-            setAnimationTriggered(true);
-            return;
-        }
-        const experienceContainerXTopLocationToWindowHeightRatio = experienceContainerXTopLocation / windowHeight;
-        if ( experienceContainerXTopLocationToWindowHeightRatio <= 0.4 &&
-            animationTriggered === false
-        ) { 
-            // console.log("top animation triggered", animationTriggered)
-            setAnimationTriggered(true);
-        } else if ( experienceContainerXTopLocationToWindowHeightRatio >= 0.95 &&
-            animationTriggered === true
-        ){
-            // console.log("reset animation triggered", animationTriggered)
-            setAnimationTriggered(false);
-        }
-    }, [
+    const globalContext = useContext(GlobalContext);
+    const setGlobalContextVal = globalContext["setGlobalContextVal"]
+
+    // register the useImmer state variable used to trigger the 
+    // animation to the globalContext. Now, the intersection observer
+    // can trigger the animation
+    // using useEffect is important as whenever the animationTrigger value
+    // changes we need to update it, so that the intersection observer has the necessary information
+    useEffect(() => {
+        if (setGlobalContextVal === undefined) return;
+        setGlobalContextVal(state => {
+            if (state.componentAnimationTriggerMap === undefined ||
+                state.componenentSetAnimationTriggerMap === undefined
+            ) {
+                state.componentAnimationTriggerMap = {};
+                state.componenentSetAnimationTriggerMap = {}; 
+            }
+            state.componentAnimationTriggerMap["experience"] = animationTriggered;
+            state.componenentSetAnimationTriggerMap["experience"] = setAnimationTriggered;
+            return state;
+        })
+    },[
+        setGlobalContextVal,
         animationTriggered,
         setAnimationTriggered,
     ]);
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleExperienceContainerAnimation);
-        return () => {
-            window.removeEventListener("scroll", handleExperienceContainerAnimation);
-        }
-    }, [
-        handleExperienceContainerAnimation,
-    ]);
     
     return (
         <Container

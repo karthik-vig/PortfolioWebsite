@@ -20,104 +20,20 @@ import Certificates from './Certificates'
 import Publications from './Publications'
 import Overlay from './Overlay'
 import Parallax, {
-  parallaxLayersTemplate,
+  parallaxLayersTemplate
 } from './Parallax'
+import GlobalContext, {
+  GlobalContextValTemplate,
+} from './globalContext'
+import InitIntersectionObserver from './globalScrollHandler'
+import PortfolioData from './assets/data/data';
+// import { 
+//   parallaxLayersTemplate,
+// } from './assets/data/parallaxLayers';
+import {
+  useImmer,
+} from 'use-immer';
 
-
-const horizonalParallaxLayers: parallaxLayersTemplate[] = [
-  {
-    src: "./images/parallaxLayers/horizontalLayers/white_base_bg.svg",
-    movementY: {
-      start: 0,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-  {
-    src: "./images/parallaxLayers/horizontalLayers/bg_layer.svg",
-    movementY: {
-      start: -25,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-  {
-    src: "./images/parallaxLayers/horizontalLayers/middle_layer.svg",
-    movementY: {
-      start: 50,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-  {
-    src: "./images/parallaxLayers/horizontalLayers/fg_layer.svg",
-    movementY: {
-      start: 100,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-];
-
-
-const verticalParallaxLayers: parallaxLayersTemplate[] = [
-  {
-    src: "./images/parallaxLayers/verticalLayers/white_base_bg.svg",
-    movementY: {
-      start: 0,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-  {
-    src: "./images/parallaxLayers/verticalLayers/bg_layer.svg",
-    movementY: {
-      start: -25,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-  {
-    src: "./images/parallaxLayers/verticalLayers/middle_layer.svg",
-    movementY: {
-      start: 50,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-  {
-    src: "./images/parallaxLayers/verticalLayers/fg_layer.svg",
-    movementY: {
-      start: 100,
-      end: 0,
-    },
-    dimension: {
-      height: 100,
-      width: 100,
-    }
-  },
-];
 
 
 function App({
@@ -154,7 +70,9 @@ function Main() {
   const [screenDisplayWidth, setScreenDisplayWidth] = useState<number | undefined>(0);
   const [appOverflow, setAppOverflow] = useState<boolean>(false);
   const [triggerOverlay, setTriggerOverlay] = useState<boolean>(true);
-  const [parallaxLayer, setParallaxLayer] = useState<parallaxLayersTemplate[]>(horizonalParallaxLayers);
+  const [parallaxLayer, setParallaxLayer] = useState<parallaxLayersTemplate[]>(PortfolioData.horizontalParallaxLayers as parallaxLayersTemplate[]);
+
+  // console.log("parallax layer horizonal layer: ", PortfolioData.horizontalParallaxLayers);
 
   const handleSetMainScreenSize = useCallback(() => {
     if (main.current === null) return;
@@ -167,9 +85,9 @@ function Main() {
 
   const handleSelectParallaxLayerType = useCallback(() => {
     if (window.innerWidth > 1024 ) {
-      setParallaxLayer(horizonalParallaxLayers);
+      setParallaxLayer(PortfolioData.horizontalParallaxLayers as parallaxLayersTemplate[]);
     } else {
-      setParallaxLayer(verticalParallaxLayers);
+      setParallaxLayer(PortfolioData.verticalParallaxLayers as parallaxLayersTemplate[]);
     }
 
   }, [
@@ -202,40 +120,73 @@ function Main() {
 
   setTimeout(setTriggerOverlay, 2000, false);
 
+  // setup for the glocal scroll event handling,
+  // used to trigger animation on scroll, when 
+  // the element is in view
+
+  const [globalContextVal, setGlobalContextVal] = useImmer<GlobalContextValTemplate>({});
+
+  useEffect(() => {
+    const componentIDs = [
+      "certificates",
+      "experience",
+      "education",
+    ];
+    if (globalContextVal["componentAnimationTriggerMap"] === undefined ||
+      globalContextVal["componenentSetAnimationTriggerMap"] === undefined
+    ) return;
+    const observer = InitIntersectionObserver(
+      componentIDs,
+      globalContextVal["componentAnimationTriggerMap"],
+      globalContextVal["componenentSetAnimationTriggerMap"],
+    );
+    return () => {
+      observer.disconnect();
+    }
+  }, [
+    globalContextVal,
+  ]);
 
   return (
     <StrictMode>
-      <Theme
-        ref={main}
-        accentColor="blue"
-        grayColor="slate"
-        appearance="dark"
-        radius="large"
-        scaling="100%"
-        panelBackground="translucent"
-        style={{
-          width: "100%",
-          height: "100%",
-          minHeight: "100vh",
-          maxHeight: "auto",
+      <GlobalContext.Provider
+        value={{
+          globalContextVal: globalContextVal,
+          setGlobalContextVal: setGlobalContextVal,
         }}
-        className="\
-        bg-gradient-to-r from-sky-500 to-purple-500 \
-        "
       >
-        <Parallax 
-          screenDisplayWidth={screenDisplayWidth}
-          parallaxLayers={parallaxLayer}
+        <Theme
+          ref={main}
+          accentColor="blue"
+          grayColor="slate"
+          appearance="dark"
+          radius="large"
+          scaling="100%"
+          panelBackground="translucent"
+          style={{
+            width: "100%",
+            height: "100%",
+            minHeight: "100vh",
+            maxHeight: "auto",
+          }}
+          className="\
+          bg-gradient-to-r from-sky-500 to-purple-500 \
+          "
         >
-          <App
-            appOverflow={appOverflow}
+          <Parallax 
+            screenDisplayWidth={screenDisplayWidth}
+            parallaxLayers={parallaxLayer}
+          >
+            <App
+              appOverflow={appOverflow}
+            />
+          </Parallax>
+          <Overlay 
+            screenDisplayWidth={screenDisplayWidth}
+            triggerOverlay={triggerOverlay}
           />
-        </Parallax>
-        <Overlay 
-          screenDisplayWidth={screenDisplayWidth}
-          triggerOverlay={triggerOverlay}
-        />
-    </Theme>    
+      </Theme>
+    </GlobalContext.Provider> 
   </StrictMode>
   );
 }

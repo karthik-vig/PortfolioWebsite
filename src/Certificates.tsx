@@ -7,12 +7,20 @@ import {
     Box,
 } from '@radix-ui/themes';
 import {
-    useCallback,
+    // useCallback,
     useEffect,
     useRef,
     useState,
+    useContext,
+    // useMemo,
 } from 'react';
 import Data from './assets/data/data';
+import GlobalContext, {
+    // GlobalContextTemplate,
+    // GlobalContextValTemplate,
+    // ObserverThresholdValTemplate,
+} from './globalContext';
+import { useImmer } from 'use-immer';
 
 interface CertificateTemplate {
     certificateTitle: string;
@@ -136,48 +144,35 @@ function CertificateInfo({
 
 export default function Certificates(){
 
-    const [animationTriggered, setAnimationTriggered] = useState<boolean>(false);
+    const [animationTriggered, setAnimationTriggered] = useImmer<boolean>(false);
     const certificateContainer = useRef<HTMLDivElement>(null);
 
-    const handleCertificateAnimationTrigger = useCallback(()=>{
-        const certificatesContainerXTopLocation = certificateContainer.current?.getBoundingClientRect().top;
-        const certificatesContainerXBottomLocation = certificateContainer.current?.getBoundingClientRect().bottom;
-        if (certificatesContainerXTopLocation === undefined ||
-            certificatesContainerXBottomLocation === undefined
-        ) return;
-        const windowHeight = window.innerHeight;
-        if ( certificatesContainerXBottomLocation <= 1.05 * windowHeight && 
-            animationTriggered === false
-        ) {
-            // console.log("bottom animation triggered", animationTriggered)
-            setAnimationTriggered(true);
-            return;
-        }
-        const experienceContainerXTopLocationToWindowHeightRatio = certificatesContainerXTopLocation / windowHeight;
-        if ( experienceContainerXTopLocationToWindowHeightRatio <= 0.4 &&
-            animationTriggered === false
-        ) { 
-            // console.log("top animation triggered", animationTriggered)
-            setAnimationTriggered(true);
-        } else if ( experienceContainerXTopLocationToWindowHeightRatio >= 0.95 &&
-            animationTriggered === true
-        ){
-            // console.log("reset animation triggered", animationTriggered)
-            setAnimationTriggered(false);
-        }
-    }, [
+    const globalContext = useContext(GlobalContext);
+    const setGlobalContextVal = globalContext["setGlobalContextVal"]
+
+    // register the useImmer state variable used to trigger the 
+    // animation to the globalContext. Now, the intersection observer
+    // can trigger the animation
+    // using useEffect is important as whenever the animationTrigger value
+    // changes we need to update it, so that the intersection observer has the necessary information
+    useEffect(() => {
+        if (setGlobalContextVal === undefined) return;
+        setGlobalContextVal(state => {
+            if (state.componentAnimationTriggerMap === undefined ||
+                state.componenentSetAnimationTriggerMap === undefined
+            ) {
+                state.componentAnimationTriggerMap = {};
+                state.componenentSetAnimationTriggerMap = {}; 
+            }
+            state.componentAnimationTriggerMap["certificates"] = animationTriggered;
+            state.componenentSetAnimationTriggerMap["certificates"] = setAnimationTriggered;
+            return state;
+        })
+    },[
+        setGlobalContextVal,
         animationTriggered,
         setAnimationTriggered,
     ]);
-
-    useEffect( () => {
-        window.addEventListener("scroll", handleCertificateAnimationTrigger);
-        return () => {
-            window.removeEventListener("scroll", handleCertificateAnimationTrigger);
-        }
-    }, [
-        handleCertificateAnimationTrigger,
-    ])
     
 
     return(

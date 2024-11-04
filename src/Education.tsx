@@ -8,12 +8,15 @@ import {
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
 import {
-    useCallback,
+    // useCallback,
     useEffect,
     useLayoutEffect,
     useRef,
     useState,
+    useContext,
 } from 'react';
+import GlobalContext from './globalContext';
+import { useImmer } from 'use-immer';
 
 interface educationalQualification {
     institute: string;
@@ -196,7 +199,7 @@ function EducationSide({
 }: {
     forceDrawAllOrNone: "all"| "none" | "default",
     checkNoDrawCond: (cond: number) => boolean,
-    contentViewStatus: string,
+    contentViewStatus: boolean,
 }) {
     let cssClassNames = "\
     data-[state=true]:opacity-1 \
@@ -214,7 +217,7 @@ function EducationSide({
                 gap="5"
                 height="auto"
                 width={forceDrawAllOrNone === "all"? "95%": "48%"}
-                data-state={contentViewStatus}
+                data-state={contentViewStatus? "true": "false"}
                 className={cssClassNames}
                 justify="center"
             >
@@ -243,12 +246,12 @@ function EducationVerticalLine({
     contentViewStatus,
     height,
 }:{
-    contentViewStatus: "true" | "false";
+    contentViewStatus: boolean;
     height: number | undefined;
 }) {
-    // const timelineDiv = useRef<HTMLDivElement>(null);
+
     useLayoutEffect(() => {
-        if (contentViewStatus === "false") return;
+        if (!contentViewStatus) return;
         const rootElement: HTMLHtmlElement | null = document.querySelector(":root");
         if (rootElement === null) return;
         rootElement.style.setProperty("--timeline-height", String(height) + "px");
@@ -259,7 +262,6 @@ function EducationVerticalLine({
 
     return (
         <Flex
-            // ref={timelineDiv}
             direction="row"
             gap="5"
             height="auto"
@@ -267,8 +269,7 @@ function EducationVerticalLine({
             justify="center"
         >
             <div
-                // ref={timelineDiv}
-                data-content-view-status={contentViewStatus}
+                data-content-view-status={contentViewStatus? "true": "false"}
                 className="\
                 bg-lime-300 \
                 w-2 \
@@ -289,50 +290,33 @@ export default function Education() {
 
     const educationContainer = useRef<HTMLDivElement>(null);
     const mainFlexBox = useRef<HTMLDivElement>(null);
-    const [contentViewStatus, setContentViewStatus] = useState("false");
+    const [animationTriggered, setAnimationTriggered] = useImmer(false);
     
-    const handleContentViewStatus = useCallback( () => { 
-        // get the bottom height and if it is less than the height of 
-        // the window, meaning the element is fully visible, then 
-        // go ahead with the animation
-        const educationContainerBottomHeight = educationContainer.current?.getBoundingClientRect().bottom;
-        if (educationContainerBottomHeight == undefined) return;
-        if ( educationContainerBottomHeight <= 1.05 * window.innerHeight &&
-            contentViewStatus !== "true"
-        ) {
-            setContentViewStatus("true");
-            return;
-        }
-        // even if the entire element is not visible, but occupies
-        // significant portion of the screen, then start the animation
-        // anyway.
-        // only reset the condition for the animation to occur again, 
-        // if the element is fully out of view area.
-        const educationContainerYLocation = educationContainer.current?.getBoundingClientRect().top;
-        if (educationContainerYLocation == undefined) return;
-        const windowHeight = window.innerHeight;
-        const educationContainerYLocationToWindowHeightRatio = educationContainerYLocation / windowHeight;
-        if ( educationContainerYLocationToWindowHeightRatio <= 0.2 &&
-            contentViewStatus !== "true"
-        ) {
-            setContentViewStatus("true");
-        } else if ( educationContainerYLocationToWindowHeightRatio >= 0.95 &&
-            contentViewStatus !== "false"
-        ){
-            setContentViewStatus("false");
-        }
-    }, [
-        contentViewStatus,
-        setContentViewStatus,
-    ]);
+    const globalContext = useContext(GlobalContext);
+    const setGlobalContextVal = globalContext["setGlobalContextVal"]
 
+    // register the useImmer state variable used to trigger the 
+    // animation to the globalContext. Now, the intersection observer
+    // can trigger the animation
+    // using useEffect is important as whenever the animationTrigger value
+    // changes we need to update it, so that the intersection observer has the necessary information
     useEffect(() => {
-        window.addEventListener("scroll", handleContentViewStatus);
-        return () => {
-            window.removeEventListener("scroll", handleContentViewStatus);
-        }
-    }, [
-        handleContentViewStatus,
+        if (setGlobalContextVal === undefined) return;
+        setGlobalContextVal(state => {
+            if (state.componentAnimationTriggerMap === undefined ||
+                state.componenentSetAnimationTriggerMap === undefined
+            ) {
+                state.componentAnimationTriggerMap = {};
+                state.componenentSetAnimationTriggerMap = {}; 
+            }
+            state.componentAnimationTriggerMap["education"] = animationTriggered;
+            state.componenentSetAnimationTriggerMap["education"] = setAnimationTriggered;
+            return state;
+        })
+    },[
+        setGlobalContextVal,
+        animationTriggered,
+        setAnimationTriggered,
     ]);
     
 
@@ -367,16 +351,16 @@ export default function Education() {
                 <EducationSide 
                     forceDrawAllOrNone={window.innerWidth < 770? "none": "default"}
                     checkNoDrawCond={(cond: number) => cond % 2 !== 0}
-                    contentViewStatus={contentViewStatus}
+                    contentViewStatus={animationTriggered}
                 />
                 <EducationVerticalLine 
-                    contentViewStatus={contentViewStatus as ("true" | "false")}
+                    contentViewStatus={animationTriggered}
                     height={mainFlexBox.current?.getBoundingClientRect().height}
                 />
                 <EducationSide
                     forceDrawAllOrNone={window.innerWidth < 770? "all": "default"}
                     checkNoDrawCond={(cond: number) => cond % 2 === 0}
-                    contentViewStatus={contentViewStatus}
+                    contentViewStatus={animationTriggered}
                 />
             </Flex>
         </Container>

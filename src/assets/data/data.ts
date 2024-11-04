@@ -6,6 +6,10 @@ import ExperienceData from "./experienceData";
 import CertificatesData from "./certificatesData";
 import PublicationsData from "./publicationsData";
 import NavbarData from "./navbarData";
+import {
+    horizontalParallaxLayers,
+    verticalParallaxLayers,
+} from './parallaxLayers'
 
 interface PortfolioDataType {
     [fieldName: string]: Array<object>;
@@ -36,6 +40,12 @@ const PortfolioData: PortfolioDataType = {
     publications: [
         ...PublicationsData,
     ],
-}
+    horizontalParallaxLayers: [ 
+        ...horizontalParallaxLayers,
+    ],
+    verticalParallaxLayers: [
+        ...verticalParallaxLayers,
+    ],
+};
 
 export default PortfolioData;
