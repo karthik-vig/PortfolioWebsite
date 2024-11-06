@@ -58,9 +58,22 @@ function ParallayLayer({
 
     // change the Y position on scroll
     useEffect(() => {
-        window.addEventListener("scroll", handleSetSVGLayerYPosition);
+        // function to slow down the number of recalculations on scroll
+        const throttle = (callback: () => void, throttleTimeLimit: number) => {
+            let wait = false;
+            return () => {
+                if(wait) return;
+                callback();
+                wait = true;
+                setTimeout(() => {
+                    wait = false;
+                }, throttleTimeLimit);
+            }
+        };
+        const throttledHandleSetSVGLayerYPosition = throttle(handleSetSVGLayerYPosition, 25);
+        window.addEventListener("scroll", throttledHandleSetSVGLayerYPosition);
         return () => {
-            window.removeEventListener("scroll", handleSetSVGLayerYPosition);
+            window.removeEventListener("scroll", throttledHandleSetSVGLayerYPosition);
         }
     }, [
         handleSetSVGLayerYPosition,
@@ -91,8 +104,9 @@ function ParallayLayer({
                 width: screenDisplayWidth + "px",
                 objectFit: "cover",
                 zIndex: String(zIndex),
-                top: `${svgLayerYPosition}px`,
+                top: `0px`,
                 left: `${svgLayerXPosition}px`,
+                transform: `translateY(${svgLayerYPosition}px)`,
             }}
         />
     );
