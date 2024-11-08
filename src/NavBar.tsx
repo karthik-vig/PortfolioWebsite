@@ -10,8 +10,20 @@ import {
     useEffect,
     useRef,
     useCallback,
+    // Profiler,
 } from 'react';
 
+
+// function onRender(
+//     id: string, 
+//     phase: string, 
+//     actualDuration: number, 
+//     baseDuration: number, 
+//     startTime: number, 
+//     commitTime: number
+// ){
+//     console.log(`ID: ${id},\nPhase: ${phase},\nactualDuration: ${actualDuration},\nbaseDuration: ${baseDuration},\nStartTime: ${startTime},\nCommitTime: ${commitTime}`);
+// }
 
 function ToggleNavBar({
     toggle,
@@ -144,13 +156,14 @@ export default function NavBar() {
     const [ changeNavBarBg ,setChangeNavBarBg ] = useState("false");
 
     const handleNavBarBgChange = useCallback(() => {
-        if (window.scrollY > 300) {
+        if (window.scrollY > 300 && changeNavBarBg === "false") {
             setChangeNavBarBg("true");
-        } else {
+        } else if (window.scrollY < 300 && changeNavBarBg === "true") {
             setChangeNavBarBg("false");
         }
     },[
         setChangeNavBarBg,
+        changeNavBarBg,
     ]);
 
     useEffect( () => {
@@ -160,7 +173,7 @@ export default function NavBar() {
         }
     }, [
         handleNavBarBgChange,
-    ])
+    ]);
 
     // swap out the entire CSS className based on the screen size
     // necessary to deploy different animation action based on the 
@@ -197,13 +210,16 @@ export default function NavBar() {
 
     const [ toggleNavBarButtonDisplay, setToggleNavBarButtonDisplay ] = useState<boolean>(true);
 
-    const changeShowNavBar = () => {
+    const changeShowNavBar = useCallback(() => {
         if (showNavBar === "true") {
             setShowNavBar("false");
         } else {
             setShowNavBar("true");
         }
-    }
+    }, [
+        showNavBar,
+        setShowNavBar,
+    ]);
 
     const changeNavBarClass = useCallback(() => {
         if (window.innerWidth < smallScreenBreakPointSize) {
@@ -256,6 +272,10 @@ export default function NavBar() {
 
     return (
         <>
+        {/* <Profiler
+            id="navBarButton"
+            onRender={onRender}
+        > */}
         <Button
             hidden={toggleNavBarButtonDisplay}
             onClick={changeShowNavBar}
@@ -271,6 +291,11 @@ export default function NavBar() {
                 toggle={showNavBar}
             />
         </Button>
+        {/* </Profiler>
+        <Profiler
+            id="navBarCancelBGContainer"
+            onRender={onRender}
+        > */}
         <Flex
             hidden={showNavBar === "true"? false: true}
             className="\
@@ -282,6 +307,11 @@ export default function NavBar() {
             onClick={changeShowNavBar}
         >
         </Flex>
+        {/* </Profiler>
+        <Profiler
+            id="navBarTabContainer"
+            onRender={onRender}
+        > */}
         <Flex
             data-change-nav-bar-bg={changeNavBarBg}
             data-show-nav-bar={showNavBar}
@@ -327,6 +357,7 @@ export default function NavBar() {
                 })
             }
         </Flex>
+        {/* </Profiler> */}
         </> 
     );
 }

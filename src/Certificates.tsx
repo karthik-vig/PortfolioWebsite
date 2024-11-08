@@ -7,19 +7,11 @@ import {
     Box,
 } from '@radix-ui/themes';
 import {
-    // useCallback,
     useEffect,
     useRef,
     useState,
-    useContext,
-    // useMemo,
 } from 'react';
 import Data from './assets/data/data';
-import GlobalContext, {
-    // GlobalContextTemplate,
-    // GlobalContextValTemplate,
-    // ObserverThresholdValTemplate,
-} from './globalContext';
 import { useImmer } from 'use-immer';
 
 interface CertificateTemplate {
@@ -147,31 +139,56 @@ export default function Certificates(){
     const [animationTriggered, setAnimationTriggered] = useImmer<boolean>(false);
     const certificateContainer = useRef<HTMLDivElement>(null);
 
-    const globalContext = useContext(GlobalContext);
-    const setGlobalContextVal = globalContext["setGlobalContextVal"]
-
-    // register the useImmer state variable used to trigger the 
-    // animation to the globalContext. Now, the intersection observer
-    // can trigger the animation
-    // using useEffect is important as whenever the animationTrigger value
-    // changes we need to update it, so that the intersection observer has the necessary information
     useEffect(() => {
-        if (setGlobalContextVal === undefined) return;
-        setGlobalContextVal(state => {
-            if (state.componentAnimationTriggerMap === undefined ||
-                state.componenentSetAnimationTriggerMap === undefined
-            ) {
-                state.componentAnimationTriggerMap = {};
-                state.componenentSetAnimationTriggerMap = {}; 
+        const throttle = (callback: () => void, throttleTime: number) => {
+            let wait = false;
+            return () => {
+                if (wait) return;
+                callback();
+                wait = true;
+                setTimeout(() => {
+                    wait = false;
+                }, throttleTime);
+            };
+        };
+        const scrollTrigger = () => {
+            if (certificateContainer.current === null) return;
+            const certificateContainerElement = certificateContainer.current;
+            const {   
+                top: certificateContainerYLocation,
+                bottom: certificateContainerBottomHeight 
+            } = certificateContainerElement.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            // if the entire element is in view then display it
+            if ( certificateContainerBottomHeight <= 1.05 * windowHeight &&
+                animationTriggered === false
+            ){
+                setAnimationTriggered(true);
+                return;
             }
-            state.componentAnimationTriggerMap["certificates"] = animationTriggered;
-            state.componenentSetAnimationTriggerMap["certificates"] = setAnimationTriggered;
-            return state;
-        })
-    },[
-        setGlobalContextVal,
+            // if the element is large; then when enought of it covers the
+            // screen trigger the animation; else reset the animation
+            const certificateContainerYLocationToWindowHeightRatio = certificateContainerYLocation / windowHeight;
+            if (certificateContainerYLocationToWindowHeightRatio <= 0.2 &&
+                animationTriggered === false
+            ) {
+                setAnimationTriggered(true);
+            } else if (
+                certificateContainerYLocationToWindowHeightRatio >= 0.95 &&
+                animationTriggered === true
+            ) {
+                setAnimationTriggered(false);
+            }
+        };
+        const throttledScrollTrigger = throttle(scrollTrigger, 25);
+        window.addEventListener("scroll", throttledScrollTrigger);
+        return () => {
+            window.removeEventListener("scroll", throttledScrollTrigger);
+        }
+    }, [
         animationTriggered,
         setAnimationTriggered,
+        certificateContainer,
     ]);
     
 

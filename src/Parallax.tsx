@@ -6,6 +6,7 @@ import {
     useState,
 } from 'react';
 
+
 export const svgID: string = "#parallax";
 
 export interface parallaxLayersTemplate {
@@ -25,7 +26,7 @@ export interface parallaxLayersTemplate {
 }
 
 
-function ParallayLayer({
+function ParallaxLayer({
     parallaxLayer,
     zIndex,
     screenDisplayWidth,
@@ -71,9 +72,10 @@ function ParallayLayer({
             }
         };
         const throttledHandleSetSVGLayerYPosition = throttle(handleSetSVGLayerYPosition, 25);
-        window.addEventListener("scroll", throttledHandleSetSVGLayerYPosition);
+        const throttleRequestAnimationFrame = () => requestAnimationFrame(throttledHandleSetSVGLayerYPosition);
+        window.addEventListener("scroll", throttleRequestAnimationFrame);
         return () => {
-            window.removeEventListener("scroll", throttledHandleSetSVGLayerYPosition);
+            window.removeEventListener("scroll", throttleRequestAnimationFrame);
         }
     }, [
         handleSetSVGLayerYPosition,
@@ -136,7 +138,7 @@ export default function Parallax({
                 {
                     parallaxLayers.map((element: parallaxLayersTemplate, idx: number) => {
                         return (
-                            <ParallayLayer
+                            <ParallaxLayer
                                 key={idx}
                                 parallaxLayer={element}
                                 zIndex={idx + 1}

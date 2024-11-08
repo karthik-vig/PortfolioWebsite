@@ -5,6 +5,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  // Profiler,
 } from 'react'
 import {
   Theme,
@@ -22,19 +23,19 @@ import Overlay from './Overlay'
 import Parallax, {
   parallaxLayersTemplate
 } from './Parallax'
-import GlobalContext, {
-  GlobalContextValTemplate,
-} from './globalContext'
-import InitIntersectionObserver from './globalScrollHandler'
 import PortfolioData from './assets/data/data';
-// import { 
-//   parallaxLayersTemplate,
-// } from './assets/data/parallaxLayers';
-import {
-  useImmer,
-} from 'use-immer';
 
 
+// function onRender(
+//   id: string, 
+//   phase: string, 
+//   actualDuration: number, 
+//   baseDuration: number, 
+//   startTime: number, 
+//   commitTime: number
+// ){
+//   console.log(`ID: ${id},\nPhase: ${phase},\nactualDuration: ${actualDuration},\nbaseDuration: ${baseDuration},\nStartTime: ${startTime},\nCommitTime: ${commitTime}`);
+// }
 
 function App({
   appOverflow,
@@ -53,8 +54,18 @@ function App({
       "
       height={appOverflow? "auto": "100vh"}
     > 
+      {/* <Profiler
+      id="navBar"
+      onRender={onRender}
+      > */}
       <NavBar />
+      {/* </Profiler>
+      <Profiler
+        id="aboutSection"
+        onRender={onRender}
+      > */}
       <About />
+      {/* </Profiler> */}
       <Skills />
       <Projects />
       <Education />
@@ -116,45 +127,50 @@ function Main() {
   ]);
   
 
-  setTimeout(setAppOverflow, 2000, true);
-
-  setTimeout(setTriggerOverlay, 2000, false);
+  useEffect(() => {
+    setTimeout(setAppOverflow, 2000, true);
+    setTimeout(setTriggerOverlay, 2000, false);
+  },[
+    setAppOverflow,
+    setTriggerOverlay,
+  ]);
+  
 
   // setup for the glocal scroll event handling,
   // used to trigger animation on scroll, when 
   // the element is in view
 
-  const [globalContextVal, setGlobalContextVal] = useImmer<GlobalContextValTemplate>({});
+  // const [globalContextVal, setGlobalContextVal] = useImmer<GlobalContextValTemplate>({});
 
-  useEffect(() => {
-    const componentIDs = [
-      "certificates",
-      "experience",
-      "education",
-    ];
-    if (globalContextVal["componentAnimationTriggerMap"] === undefined ||
-      globalContextVal["componenentSetAnimationTriggerMap"] === undefined
-    ) return;
-    const observer = InitIntersectionObserver(
-      componentIDs,
-      globalContextVal["componentAnimationTriggerMap"],
-      globalContextVal["componenentSetAnimationTriggerMap"],
-    );
-    return () => {
-      observer.disconnect();
-    }
-  }, [
-    globalContextVal,
-  ]);
+  // useEffect(() => {
+  //   const componentIDs = [
+  //     "certificates",
+  //     "experience",
+  //     "education",
+  //   ];
+  //   if (globalContextVal["componentAnimationTriggerMap"] === undefined ||
+  //     globalContextVal["componenentSetAnimationTriggerMap"] === undefined
+  //   ) return;
+  //   const observer = InitIntersectionObserver(
+  //     componentIDs,
+  //     globalContextVal["componentAnimationTriggerMap"],
+  //     globalContextVal["componenentSetAnimationTriggerMap"],
+  //   );
+  //   return () => {
+  //     observer.disconnect();
+  //   }
+  // }, [
+  //   globalContextVal,
+  // ]);
 
   return (
     <StrictMode>
-      <GlobalContext.Provider
+      {/* <GlobalContext.Provider
         value={{
           globalContextVal: globalContextVal,
           setGlobalContextVal: setGlobalContextVal,
         }}
-      >
+      > */}
         <Theme
           ref={main}
           accentColor="blue"
@@ -186,7 +202,7 @@ function Main() {
             triggerOverlay={triggerOverlay}
           />
       </Theme>
-    </GlobalContext.Provider> 
+    {/* </GlobalContext.Provider>  */}
   </StrictMode>
   );
 }

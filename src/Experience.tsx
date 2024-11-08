@@ -5,17 +5,15 @@ import {
     Flex,
 } from '@radix-ui/themes';
 import {
-    // useCallback,
     useEffect,
     useRef,
     useState,
-    useContext,
 } from'react';
 import {
     useImmer,
 } from 'use-immer';
 import Data from './assets/data/data';
-import GlobalContext from './globalContext';
+
 
 interface ExperienceInfo {
     companyName: string;
@@ -27,12 +25,10 @@ interface ExperienceInfo {
 
 function ExperienceInstance({
     children,
-    // startAnimation,
     animationTriggered,
     position,
 } : {
     children: ExperienceInfo;
-    // startAnimation: string;
     animationTriggered: boolean;
     position: number;
 }) {
@@ -108,31 +104,56 @@ export default function Experience() {
     const [animationTriggered, setAnimationTriggered] = useImmer<boolean>(false);
     const experienceContainer = useRef<HTMLDivElement>(null);
 
-    const globalContext = useContext(GlobalContext);
-    const setGlobalContextVal = globalContext["setGlobalContextVal"]
-
-    // register the useImmer state variable used to trigger the 
-    // animation to the globalContext. Now, the intersection observer
-    // can trigger the animation
-    // using useEffect is important as whenever the animationTrigger value
-    // changes we need to update it, so that the intersection observer has the necessary information
     useEffect(() => {
-        if (setGlobalContextVal === undefined) return;
-        setGlobalContextVal(state => {
-            if (state.componentAnimationTriggerMap === undefined ||
-                state.componenentSetAnimationTriggerMap === undefined
-            ) {
-                state.componentAnimationTriggerMap = {};
-                state.componenentSetAnimationTriggerMap = {}; 
+        const throttle = (callback: () => void, throttleTime: number) => {
+            let wait = false;
+            return () => {
+                if (wait) return;
+                callback();
+                wait = true;
+                setTimeout(() => {
+                    wait = false;
+                }, throttleTime);
+            };
+        };
+        const scrollTrigger = () => {
+            if (experienceContainer.current === null) return;
+            const experienceContainerElement = experienceContainer.current;
+            const {   
+                top: experienceContainerYLocation,
+                bottom: experienceContainerBottomHeight 
+            } = experienceContainerElement.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            // if the entire element is in view then display it
+            if ( experienceContainerBottomHeight <= 1.05 * windowHeight &&
+                animationTriggered === false
+            ){
+                setAnimationTriggered(true);
+                return;
             }
-            state.componentAnimationTriggerMap["experience"] = animationTriggered;
-            state.componenentSetAnimationTriggerMap["experience"] = setAnimationTriggered;
-            return state;
-        })
-    },[
-        setGlobalContextVal,
+            // if the element is large; then when enought of it covers the
+            // screen trigger the animation; else reset the animation
+            const experienceContainerYLocationToWindowHeightRatio = experienceContainerYLocation / windowHeight;
+            if (experienceContainerYLocationToWindowHeightRatio <= 0.2 &&
+                animationTriggered === false
+            ) {
+                setAnimationTriggered(true);
+            } else if (
+                experienceContainerYLocationToWindowHeightRatio >= 0.95 &&
+                animationTriggered === true
+            ) {
+                setAnimationTriggered(false);
+            }
+        };
+        const throttledScrollTrigger = throttle(scrollTrigger, 25);
+        window.addEventListener("scroll", throttledScrollTrigger);
+        return () => {
+            window.removeEventListener("scroll", throttledScrollTrigger);
+        }
+    }, [
         animationTriggered,
         setAnimationTriggered,
+        experienceContainer,
     ]);
 
     

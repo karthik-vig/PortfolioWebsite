@@ -8,14 +8,11 @@ import {
 } from '@radix-ui/themes';
 import Data from './assets/data/data';
 import {
-    // useCallback,
     useEffect,
     useLayoutEffect,
     useRef,
     useState,
-    useContext,
 } from 'react';
-import GlobalContext from './globalContext';
 import { useImmer } from 'use-immer';
 
 interface educationalQualification {
@@ -292,33 +289,58 @@ export default function Education() {
     const mainFlexBox = useRef<HTMLDivElement>(null);
     const [animationTriggered, setAnimationTriggered] = useImmer(false);
     
-    const globalContext = useContext(GlobalContext);
-    const setGlobalContextVal = globalContext["setGlobalContextVal"]
-
-    // register the useImmer state variable used to trigger the 
-    // animation to the globalContext. Now, the intersection observer
-    // can trigger the animation
-    // using useEffect is important as whenever the animationTrigger value
-    // changes we need to update it, so that the intersection observer has the necessary information
+    
     useEffect(() => {
-        if (setGlobalContextVal === undefined) return;
-        setGlobalContextVal(state => {
-            if (state.componentAnimationTriggerMap === undefined ||
-                state.componenentSetAnimationTriggerMap === undefined
-            ) {
-                state.componentAnimationTriggerMap = {};
-                state.componenentSetAnimationTriggerMap = {}; 
+        const throttle = (callback: () => void, throttleTime: number) => {
+            let wait = false;
+            return () => {
+                if (wait) return;
+                callback();
+                wait = true;
+                setTimeout(() => {
+                    wait = false;
+                }, throttleTime);
+            };
+        };
+        const scrollTrigger = () => {
+            if (educationContainer.current === null) return;
+            const educationContainerElement = educationContainer.current;
+            const {   
+                top: educationContainerYLocation,
+                bottom: educationContainerBottomHeight 
+            } = educationContainerElement.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            // if the entire element is in view then display it
+            if ( educationContainerBottomHeight <= 1.05 * windowHeight &&
+                animationTriggered === false
+            ){
+                setAnimationTriggered(true);
+                return;
             }
-            state.componentAnimationTriggerMap["education"] = animationTriggered;
-            state.componenentSetAnimationTriggerMap["education"] = setAnimationTriggered;
-            return state;
-        })
-    },[
-        setGlobalContextVal,
+            // if the element is large; then when enought of it covers the
+            // screen trigger the animation; else reset the animation
+            const educationContainerYLocationToWindowHeightRatio = educationContainerYLocation / windowHeight;
+            if (educationContainerYLocationToWindowHeightRatio <= 0.2 &&
+                animationTriggered === false
+            ) {
+                setAnimationTriggered(true);
+            } else if (
+                educationContainerYLocationToWindowHeightRatio >= 0.95 &&
+                animationTriggered === true
+            ) {
+                setAnimationTriggered(false);
+            }
+        };
+        const throttledScrollTrigger = throttle(scrollTrigger, 25);
+        window.addEventListener("scroll", throttledScrollTrigger);
+        return () => {
+            window.removeEventListener("scroll", throttledScrollTrigger);
+        }
+    }, [
         animationTriggered,
         setAnimationTriggered,
+        educationContainer,
     ]);
-    
 
     return (
         <Container
