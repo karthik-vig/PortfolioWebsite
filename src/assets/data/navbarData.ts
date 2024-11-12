@@ -8,12 +8,12 @@ const NavbarData = [
         link: "#skills",
     },
     {
-        title: "Projects",
-        link: "#projects",
-    },
-    {
         title: "Education",
         link: "#education",
+    },
+    {
+        title: "Projects",
+        link: "#projects",
     },
     {
         title: "Experience",
