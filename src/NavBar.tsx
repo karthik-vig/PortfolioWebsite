@@ -158,7 +158,7 @@ export default function NavBar() {
     const handleNavBarBgChange = useCallback(() => {
         if (window.scrollY > 300 && changeNavBarBg === "false") {
             setChangeNavBarBg("true");
-        } else if (window.scrollY < 300 && changeNavBarBg === "true") {
+        } else if (window.scrollY <= 300 && changeNavBarBg === "true") {
             setChangeNavBarBg("false");
         }
     },[
