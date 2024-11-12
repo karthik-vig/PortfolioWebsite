@@ -149,20 +149,20 @@ export default function About() {
                     highlight-text \
                     "
                 >
-                    🎯 <img 
+                    <img 
                             src="./images/aboutme.svg"
                             alt="about me title"
                             className="\
                             inline \
                             w-auto \
-                            h-16 \
-                            sm:h-20 \
-                            md:h-20 \
-                            lg:h-32 \
+                            h-10 \
+                            sm:h-12 \
+                            md:h-16 \
+                            lg:h-16 \
                             p-0 \
                             m-0 \
                             "
-                        /> 🎯
+                        />
                 </Heading>
                 <Text
                     size={{
@@ -173,6 +173,7 @@ export default function About() {
                         lg: "7",
                         xl: "7",
                     }}
+                    weight="regular"
                     className="\
                     mx-10 \
                     text-justify \
