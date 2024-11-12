@@ -320,7 +320,7 @@ export default function Education() {
             // if the element is large; then when enought of it covers the
             // screen trigger the animation; else reset the animation
             const educationContainerYLocationToWindowHeightRatio = educationContainerYLocation / windowHeight;
-            if (educationContainerYLocationToWindowHeightRatio <= 0.2 &&
+            if (educationContainerYLocationToWindowHeightRatio <= 0.3 &&
                 animationTriggered === false
             ) {
                 setAnimationTriggered(true);

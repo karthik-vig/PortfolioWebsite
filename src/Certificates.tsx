@@ -169,7 +169,7 @@ export default function Certificates(){
             // if the element is large; then when enought of it covers the
             // screen trigger the animation; else reset the animation
             const certificateContainerYLocationToWindowHeightRatio = certificateContainerYLocation / windowHeight;
-            if (certificateContainerYLocationToWindowHeightRatio <= 0.2 &&
+            if (certificateContainerYLocationToWindowHeightRatio <= 0.4 &&
                 animationTriggered === false
             ) {
                 setAnimationTriggered(true);

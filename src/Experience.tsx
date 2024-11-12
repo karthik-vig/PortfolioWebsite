@@ -134,7 +134,7 @@ export default function Experience() {
             // if the element is large; then when enought of it covers the
             // screen trigger the animation; else reset the animation
             const experienceContainerYLocationToWindowHeightRatio = experienceContainerYLocation / windowHeight;
-            if (experienceContainerYLocationToWindowHeightRatio <= 0.2 &&
+            if (experienceContainerYLocationToWindowHeightRatio <= 0.3 &&
                 animationTriggered === false
             ) {
                 setAnimationTriggered(true);
